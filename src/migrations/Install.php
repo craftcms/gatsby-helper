@@ -18,7 +18,7 @@ use craft\services\Volumes;
  * Installation Migration
  *
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
- * @since 1.0
+ * @since 1.0.0
  */
 class Install extends Migration
 {
@@ -45,6 +45,7 @@ class Install extends Migration
     public function safeDown()
     {
         $this->dropTableIfExists(Table::DELETED_ELEMENTS);
+
         return true;
     }
 }

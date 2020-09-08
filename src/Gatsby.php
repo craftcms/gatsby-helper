@@ -30,8 +30,7 @@ use yii\base\Event;
  *
  * https://docs.craftcms.com/v3/extend/
  *
- * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
- * @package   Gatsby
+ * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 1.0.0
  *
  * @property  SourceNodes $data
