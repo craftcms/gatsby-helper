@@ -36,7 +36,7 @@ The event that is triggered when registering source node types.
 
 Plugins get a chance to specify additional elements that should be Gatsby source nodes.
  
-``php
+```php
 use craft\events\RegisterSourceNodeTypesEvent;
 use craft\gatsby\services\SourceNodes;
 use yii\base\Event;
