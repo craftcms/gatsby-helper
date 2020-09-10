@@ -33,6 +33,6 @@
         "name": "Gatsby",
         "handle": "gatsby",
         "developerUrl": "https://craftcms.com/",
-        "class": "craftcms\\craft-gatsby\\Gatsby",
+        "class": "craftcms\\craft-gatsby\\Gatsby"
     }
 }
