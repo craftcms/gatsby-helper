@@ -11,7 +11,6 @@
 namespace craft\gatsby;
 
 use craft\base\Element;
-use craft\base\Plugin;
 use craft\events\RegisterGqlQueriesEvent;
 use craft\events\RegisterGqlSchemaComponentsEvent;
 use craft\gatsby\gql\queries\Sourcing as SourcingDataQueries;
@@ -35,7 +34,7 @@ use yii\base\Event;
  *
  * @property  SourceNodes $data
  */
-class Gatsby extends Plugin
+class Plugin extends \craft\base\Plugin
 {
     // Static Properties
     // =========================================================================
