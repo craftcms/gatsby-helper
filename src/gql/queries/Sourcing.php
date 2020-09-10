@@ -8,7 +8,7 @@
 namespace craft\gatsby\gql\queries;
 
 use Craft;
-use craft\gatsby\Gatsby;
+use craft\gatsby\Plugin as Gatsby;
 use craft\gatsby\gql\resolvers\SourceNode as SourceNodeResolver;
 use craft\gatsby\gql\resolvers\UpdatedNode as UpdatedNodeResolver;
 use craft\gatsby\gql\resolvers\DeletedNode as DeletedNodeResolver;
