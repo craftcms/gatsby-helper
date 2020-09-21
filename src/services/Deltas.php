@@ -86,18 +86,18 @@ class Deltas extends Component
     /**
      * Get updated nodes since a specific timestamp.
      *
-     * @param string $timestamp
+     * @param DateTime $timestamp
      * @return array
      * @throws \yii\base\Exception
      */
-    public function getUpdatedNodesSinceTimeStamp(string $timestamp): array
+    public function getUpdatedNodesSinceTimeStamp(\DateTime $timestamp): array
     {
         return (new Query())
             ->select(['id', 'type'])
             ->from([CraftTable::ELEMENTS])
             ->where(['dateDeleted' => null])
             ->andWhere(['not in', 'type', $this->_getIgnoredTypes()])
-            ->andWhere(['>', 'dateUpdated', $timestamp])
+            ->andWhere(['>', 'dateUpdated', Db::prepareDateForDb($timestamp)])
             ->andWhere(['revisionId' => null])
             ->pairs();
     }
@@ -105,16 +105,16 @@ class Deltas extends Component
     /**
      * Get deleted nodes since a specific timestamp.
      *
-     * @param string $timestamp
+     * @param DateTime $timestamp
      * @return array
      * @throws \yii\base\Exception
      */
-    public function getDeletedNodesSinceTimeStamp(string $timestamp): array
+    public function getDeletedNodesSinceTimeStamp(\DateTime $timestamp): array
     {
         return (new Query())
             ->select(['elementId', 'typeName'])
             ->from([Table::DELETED_ELEMENTS])
-            ->where(['>', 'dateDeleted', $timestamp])
+            ->where(['>', 'dateDeleted', Db::prepareDateForDb($timestamp)])
             ->pairs();
     }
 
