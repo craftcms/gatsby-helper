@@ -1,37 +1,37 @@
 {
-    "name": "craftcms/craft-gatsby",
-    "description": "Plugin for enabling support for the Gatsby Craft CMS source plugin.",
-    "type": "craft-plugin",
-    "version": "1.0.0-beta.1",
-    "keywords": [
-        "craft",
-        "cms",
-        "craftcms",
-        "craft-plugin",
-        "gatsby"
-    ],
-    "support": {
-        "docs": "???",
-        "issues": "???"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Pixel & Tonic, Inc. <support@pixelandtonic.com>",
-            "homepage": "https://craftcms.com/"
-        }
-    ],
-    "require": {
-        "craftcms/cms": "^3.5.11"
-    },
-    "autoload": {
-        "psr-4": {
-          "craft\\gatsby\\": "src/"
-        }
-    },
-    "extra": {
-        "name": "Gatsby",
-        "handle": "gatsby",
-        "developerUrl": "https://craftcms.com/"
+  "name": "craftcms/craft-gatsby",
+  "description": "Plugin for enabling support for the Gatsby Craft CMS source plugin.",
+  "type": "craft-plugin",
+  "version": "1.0.0-beta.1",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "gatsby"
+  ],
+  "support": {
+    "docs": "https://github.com/craftcms/craft-gatsby",
+    "issues": "https://github.com/craftcms/craft-gatsby/issues"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pixel & Tonic, Inc. <support@pixelandtonic.com>",
+      "homepage": "https://craftcms.com/"
     }
+  ],
+  "require": {
+    "craftcms/cms": "^3.5.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "craft\\gatsby\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Gatsby",
+    "handle": "gatsby",
+    "developerUrl": "https://craftcms.com/"
+  }
 }
