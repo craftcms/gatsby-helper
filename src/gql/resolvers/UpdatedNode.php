@@ -28,6 +28,7 @@ class UpdatedNode extends Resolver
 
         foreach ($updatedNodes as $elementId => $elementType) {
             $element = Craft::$app->getElements()->getElementById($elementId, $elementType);
+
             if ($element) {
                 $resolved[] = [
                     'nodeId' => $elementId,
