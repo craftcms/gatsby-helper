@@ -26,8 +26,8 @@ class UpdatedNode extends Resolver
         $updatedNodes = Gatsby::$plugin->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since']);
         $resolved = [];
 
-        Craft::dd($updatedNodes);
-        return $resolved;
+        // Craft::dd($updatedNodes);
+        // return $resolved;
 
         foreach ($updatedNodes as $elementId => $elementType) {
             $element = Craft::$app->getElements()->getElementById($elementId, $elementType);
