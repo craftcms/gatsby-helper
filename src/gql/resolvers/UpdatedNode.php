@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://craftcms.com/
  * @copyright Copyright (c) Pixel & Tonic, Inc.
@@ -24,6 +25,8 @@ class UpdatedNode extends Resolver
     {
         $updatedNodes = Gatsby::$plugin->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since']);
         $resolved = [];
+
+        Craft::dd($updatedNodes);
 
         foreach ($updatedNodes as $elementId => $elementType) {
             $element = Craft::$app->getElements()->getElementById($elementId, $elementType);
