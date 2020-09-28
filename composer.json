@@ -11,8 +11,8 @@
         "gatsby"
     ],
     "support": {
-        "docs": "???",
-        "issues": "???"
+        "docs": "https://github.com/craftcms/craft-gatsby",
+        "issues": "https://github.com/craftcms/craft-gatsby/issues"
     },
     "license": "MIT",
     "authors": [

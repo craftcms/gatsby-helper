@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://craftcms.com/
  * @copyright Copyright (c) Pixel & Tonic, Inc.
@@ -27,10 +28,13 @@ class UpdatedNode extends Resolver
 
         foreach ($updatedNodes as $elementId => $elementType) {
             $element = Craft::$app->getElements()->getElementById($elementId, $elementType);
-            $resolved[] = [
-                'nodeId' => $elementId,
-                'nodeType' => $element->getGqlTypeName()
-            ];
+
+            if ($element) {
+                $resolved[] = [
+                    'nodeId' => $elementId,
+                    'nodeType' => $element->getGqlTypeName()
+                ];
+            }
         }
 
         return $resolved;
