@@ -86,11 +86,11 @@ class Deltas extends Component
     /**
      * Get updated nodes since a specific timestamp.
      *
-     * @param DateTime $timestamp
+     * @param string $timestamp
      * @return array
      * @throws \yii\base\Exception
      */
-    public function getUpdatedNodesSinceTimeStamp(\DateTime $timestamp): array
+    public function getUpdatedNodesSinceTimeStamp(string $timestamp): array
     {
         return (new Query())
             ->select(['id', 'type'])
@@ -105,11 +105,11 @@ class Deltas extends Component
     /**
      * Get deleted nodes since a specific timestamp.
      *
-     * @param DateTime $timestamp
+     * @param string $timestamp
      * @return array
      * @throws \yii\base\Exception
      */
-    public function getDeletedNodesSinceTimeStamp(\DateTime $timestamp): array
+    public function getDeletedNodesSinceTimeStamp(string $timestamp): array
     {
         return (new Query())
             ->select(['elementId', 'typeName'])

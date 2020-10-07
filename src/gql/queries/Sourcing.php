@@ -61,7 +61,7 @@ class Sourcing extends Query
                 'args' => [
                     'since' => [
                         'name' => 'since',
-                        'type' => Type::nonNull(DateTime::getType())
+                        'type' => Type::nonNull(Type::string())
                     ]
                 ],
                 'resolve' => UpdatedNodeResolver::class . '::resolve',
@@ -72,7 +72,7 @@ class Sourcing extends Query
                 'args' => [
                     'since' => [
                         'name' => 'since',
-                        'type' => Type::nonNull(DateTime::getType())
+                        'type' => Type::nonNull(Type::string())
                     ]
                 ],
                 'resolve' => DeletedNodeResolver::class . '::resolve',
