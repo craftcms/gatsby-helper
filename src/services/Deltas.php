@@ -99,6 +99,7 @@ class Deltas extends Component
             ->andWhere(['not in', 'type', $this->_getIgnoredTypes()])
             ->andWhere(['>', 'dateUpdated', Db::prepareDateForDb($timestamp)])
             ->andWhere(['revisionId' => null])
+            ->andWhere(['draftId' => null])
             ->pairs();
     }
 
