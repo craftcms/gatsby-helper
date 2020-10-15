@@ -10,10 +10,14 @@
 
 namespace craft\gatsby;
 
+use Craft;
 use craft\base\Element;
+use craft\elements\Entry;
 use craft\events\RegisterGqlQueriesEvent;
 use craft\events\RegisterGqlSchemaComponentsEvent;
+use craft\events\RegisterPreviewTargetsEvent;
 use craft\gatsby\gql\queries\Sourcing as SourcingDataQueries;
+use craft\gatsby\models\Settings;
 use craft\gatsby\services\Deltas;
 use craft\gatsby\services\SourceNodes;
 use craft\services\Gql;
@@ -33,6 +37,7 @@ use yii\base\Event;
  * @since 1.0.0
  *
  * @property  SourceNodes $data
+ * @property  Deltas $deltas
  */
 class Plugin extends \craft\base\Plugin
 {
@@ -51,6 +56,8 @@ class Plugin extends \craft\base\Plugin
      * @var string
      */
     public $schemaVersion = '1.0.0';
+
+    public $hasCpSettings = true;
 
     // Public Methods
     // =========================================================================
@@ -90,6 +97,27 @@ class Plugin extends \craft\base\Plugin
     }
 
     /**
+     * @inheritdoc
+     */
+    protected function createSettingsModel()
+    {
+        return new Settings();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function settingsHtml()
+    {
+        return Craft::$app->getView()->renderTemplate(
+            'gatsby/settings',
+            [
+                'settings' => $this->getSettings(),
+            ]
+        );
+    }
+
+    /**
      * Register the Gql queries
      */
     private function _registerGqlQueries()
@@ -104,7 +132,7 @@ class Plugin extends \craft\base\Plugin
     }
 
     /**
-     * Register the Gql permissions
+     * Register the Gql schmea components
      */
     private function _registerGqlComponents()
     {
@@ -118,7 +146,7 @@ class Plugin extends \craft\base\Plugin
     }
 
     /**
-     * Register the Gql permissions
+     * Register the Element listeners
      */
     private function _registerElementListeners()
     {
@@ -133,7 +161,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * Register the services
      */
-    public function _registerServices()
+    private function _registerServices()
     {
         $this->setComponents([
             'sourceNodes' => [
