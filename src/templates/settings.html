@@ -1,0 +1,10 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    first: true,
+    label: "Preview Server URL",
+    instructions: "The Gatsby preview server URL, including the protocol and port.",
+    name: 'previewServerUrl',
+    value: settings.previewServerUrl
+}) }}
+

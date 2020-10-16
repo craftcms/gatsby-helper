@@ -20,6 +20,7 @@ use craft\gatsby\gql\queries\Sourcing as SourcingDataQueries;
 use craft\gatsby\models\Settings;
 use craft\gatsby\services\Deltas;
 use craft\gatsby\services\SourceNodes;
+use craft\helpers\StringHelper;
 use craft\services\Gql;
 use yii\base\Event;
 
@@ -74,6 +75,7 @@ class Plugin extends \craft\base\Plugin
         $this->_registerGqlQueries();
         $this->_registerGqlComponents();
         $this->_registerElementListeners();
+        $this->_registerLivePreviewListener();
     }
 
     /**
@@ -156,6 +158,52 @@ class Plugin extends \craft\base\Plugin
 
             $this->getDeltas()->registerDeletedElement($element);
         });
+    }
+
+    /**
+     * Inject the live preview listener code.
+     */
+    private function _registerLivePreviewListener()
+    {
+        $previewUrl = $this->getSettings()->previewServerUrl;
+
+        if (!empty($previewUrl)) {
+            Event::on(Entry::class, Entry::EVENT_REGISTER_PREVIEW_TARGETS, function(RegisterPreviewTargetsEvent $event) use ($previewUrl) {
+                /** @var Element $element */
+                $element = $event->sender;
+
+                $url = parse_url(StringHelper::toLowerCase($previewUrl));
+                $compare = $url['scheme'] . '://' . $url['host'] . ($url['port'] !== 80 ? ':' . $url['port'] : '');
+
+                $gqlTypeName = $element->getGqlTypeName();
+                $elementId = $element->getIsDraft() ? $element->getSourceId() : $element->getId();
+                $refreshUrl = StringHelper::removeRight($previewUrl, '/') . '/__refresh';
+
+                $js = <<<JS
+                    Garnish.on(Craft.Preview, 'beforeUpdateIframe', async function(event) {
+                        const url = event.previewTarget.url;
+                        const compareUrl = new URL(url);
+                        
+                        if ("$compare" == compareUrl.protocol + '//' + compareUrl.host) {
+                            const http = new XMLHttpRequest();
+                            const token = await event.target.draftEditor.getPreviewToken();
+                            const payload = {
+                                operation: 'update',
+                                typeName: '$gqlTypeName',
+                                id: $elementId,
+                                token: token
+                            };
+                             
+                            http.open('POST', "$refreshUrl", true);
+                            http.setRequestHeader('Content-type', 'application/json');
+                            http.send(JSON.stringify(payload));        
+                        }
+                    });
+JS;
+
+                Craft::$app->view->registerJs($js);
+            });
+        }
     }
 
     /**
