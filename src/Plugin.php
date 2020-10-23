@@ -176,29 +176,55 @@ class Plugin extends \craft\base\Plugin
                 $compare = $url['scheme'] . '://' . $url['host'] . ($url['port'] !== 80 ? ':' . $url['port'] : '');
 
                 $gqlTypeName = $element->getGqlTypeName();
-                $elementId = $element->getIsDraft() ? $element->getSourceId() : $element->getId();
+                $elementId = $element->getSourceId();
                 $refreshUrl = StringHelper::removeRight($previewUrl, '/') . '/__refresh';
 
                 $js = <<<JS
-                    Garnish.on(Craft.Preview, 'beforeUpdateIframe', async function(event) {
-                        const url = event.previewTarget.url;
-                        const compareUrl = new URL(url);
+                    {
+                        let currentlyPreviewing;
                         
-                        if ("$compare" == compareUrl.protocol + '//' + compareUrl.host) {
-                            const http = new XMLHttpRequest();
-                            const token = await event.target.draftEditor.getPreviewToken();
-                            const payload = {
-                                operation: 'update',
-                                typeName: '$gqlTypeName',
-                                id: $elementId,
-                                token: token
-                            };
-                             
-                            http.open('POST', "$refreshUrl", true);
-                            http.setRequestHeader('Content-type', 'application/json');
-                            http.send(JSON.stringify(payload));        
+                        const alertGatsby = async function (event, doPreview) {
+                            const url = doPreview ? event.previewTarget.url : '$refreshUrl';
+                            const compareUrl = new URL(url);
+                            
+                            if ((doPreview || currentlyPreviewing) && (!doPreview || ("$compare" == compareUrl.protocol + '//' + compareUrl.host))) {
+                            
+                                if (doPreview) {
+                                    currentlyPreviewing = $elementId;
+                                }
+                                    
+                                const http = new XMLHttpRequest();
+                                
+                                const payload = {
+                                    operation: 'update',
+                                    typeName: '$gqlTypeName',
+                                    id: currentlyPreviewing
+                                };
+                                 
+                                if (doPreview) {
+                                    payload.token = await event.target.draftEditor.getPreviewToken();
+                                } else {
+                                    currentlyPreviewing = null;
+                                }
+                                
+                                http.open('POST', "$refreshUrl", true);
+                                http.setRequestHeader('Content-type', 'application/json');
+                                http.send(JSON.stringify(payload));        
+                            }
                         }
-                    });
+                        
+                        Garnish.on(Craft.Preview, 'beforeUpdateIframe', function(event) {
+                            alertGatsby(event, true);                        
+                        });
+                        
+                        Garnish.on(Craft.Preview, 'beforeClose', function(event) {
+                            alertGatsby(event, false);                        
+                        });
+                                   
+                        Garnish.\$win.on('beforeunload', function(event) {
+                            alertGatsby(event, false);                        
+                        });           
+                    }          
 JS;
 
                 Craft::$app->view->registerJs($js);
