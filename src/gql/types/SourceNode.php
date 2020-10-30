@@ -52,11 +52,6 @@ class SourceNode extends ObjectType
     public static function getFieldDefinitions(): array
     {
         return TypeManager::prepareFieldDefinitions([
-            'elementType' => [
-                'name' => 'elementType',
-                'type' => Type::nonNull(Type::string()),
-                'description' => 'Element type that is providing the data.'
-            ],
             'list' => [
                 'name' => 'list',
                 'type' => Type::nonNull(Type::string()),
