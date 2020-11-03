@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2020 Pixel & Tonic, Inc. <support@pixelandtonic.com>
  */
 
-namespace craft\gatsby;
+namespace craft\gatsbyhelper;
 
 use Craft;
 use craft\base\Element;
@@ -16,10 +16,10 @@ use craft\elements\Entry;
 use craft\events\RegisterGqlQueriesEvent;
 use craft\events\RegisterGqlSchemaComponentsEvent;
 use craft\events\RegisterPreviewTargetsEvent;
-use craft\gatsby\gql\queries\Sourcing as SourcingDataQueries;
-use craft\gatsby\models\Settings;
-use craft\gatsby\services\Deltas;
-use craft\gatsby\services\SourceNodes;
+use craft\gatsbyhelper\gql\queries\Sourcing as SourcingDataQueries;
+use craft\gatsbyhelper\models\Settings;
+use craft\gatsbyhelper\services\Deltas;
+use craft\gatsbyhelper\services\SourceNodes;
 use craft\helpers\StringHelper;
 use craft\services\Gql;
 use yii\base\Event;

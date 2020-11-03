@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license/
  */
 
-namespace craft\gatsby\events;
+namespace craft\gatsbyhelper\events;
 
 use yii\base\Event;
 

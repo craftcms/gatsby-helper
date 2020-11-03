@@ -5,10 +5,10 @@
  * @license https://craftcms.github.io/license/
  */
 
-namespace craft\gatsby\gql\resolvers;
+namespace craft\gatsbyhelper\gql\resolvers;
 
 use craft\gql\base\Resolver;
-use craft\gatsby\Plugin as Gatsby;
+use craft\gatsbyhelper\Plugin as Gatsby;
 use GraphQL\Type\Definition\ResolveInfo;
 
 /**

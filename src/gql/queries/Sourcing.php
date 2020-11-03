@@ -5,16 +5,16 @@
  * @license https://craftcms.github.io/license/
  */
 
-namespace craft\gatsby\gql\queries;
+namespace craft\gatsbyhelper\gql\queries;
 
 use Craft;
-use craft\gatsby\Plugin as Gatsby;
-use craft\gatsby\gql\resolvers\SourceNode as SourceNodeResolver;
-use craft\gatsby\gql\resolvers\UpdatedNode as UpdatedNodeResolver;
-use craft\gatsby\gql\resolvers\DeletedNode as DeletedNodeResolver;
-use craft\gatsby\gql\types\ChangedNode;
-use craft\gatsby\helpers\Gql as GqlHelper;
-use craft\gatsby\gql\types\SourceNode;
+use craft\gatsbyhelper\Plugin as Gatsby;
+use craft\gatsbyhelper\gql\resolvers\SourceNode as SourceNodeResolver;
+use craft\gatsbyhelper\gql\resolvers\UpdatedNode as UpdatedNodeResolver;
+use craft\gatsbyhelper\gql\resolvers\DeletedNode as DeletedNodeResolver;
+use craft\gatsbyhelper\gql\types\ChangedNode;
+use craft\gatsbyhelper\helpers\Gql as GqlHelper;
+use craft\gatsbyhelper\gql\types\SourceNode;
 use craft\gql\base\Query;
 use craft\gql\types\DateTime;
 use GraphQL\Type\Definition\Type;

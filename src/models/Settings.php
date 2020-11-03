@@ -1,5 +1,5 @@
 <?php
-namespace craft\gatsby\models;
+namespace craft\gatsbyhelper\models;
 
 use \PHP_Typography\Settings\Dash_Style;
 use \PHP_Typography\Settings\Quote_Style;

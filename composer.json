@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-          "craft\\gatsby\\": "src/"
+          "craft\\gatsbyhelper\\": "src/"
         }
     },
     "extra": {

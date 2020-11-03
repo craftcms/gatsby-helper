@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license/
  */
 
-namespace craft\gatsby\helpers;
+namespace craft\gatsbyhelper\helpers;
 
 use craft\helpers\Gql as GqlHelper;
 

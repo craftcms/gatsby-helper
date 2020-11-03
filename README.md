@@ -54,8 +54,8 @@ Event that’s triggered when registering source node types.
 Plugins get a chance to specify additional elements that should be Gatsby source nodes.
 
 ```php
-use craft\gatsby\events\RegisterSourceNodeTypesEvent;
-use craft\gatsby\services\SourceNodes;
+use craft\gatsbyhelper\events\RegisterSourceNodeTypesEvent;
+use craft\gatsbyhelper\services\SourceNodes;
 use yii\base\Event;
 
 Event::on(
@@ -90,8 +90,8 @@ Event that’s triggered when registering ignored element types.
 Plugins get a chance to specify which element types should not be updated individually.
 
 ```php
-use craft\gatsby\events\RegisterIgnoredTypesEvent;
-use craft\gatsby\services\Deltas;
+use craft\gatsbyhelper\events\RegisterIgnoredTypesEvent;
+use craft\gatsbyhelper\services\Deltas;
 use yii\base\Event;
 
 Event::on(

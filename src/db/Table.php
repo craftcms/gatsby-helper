@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license/
  */
 
-namespace craft\gatsby\db;
+namespace craft\gatsbyhelper\db;
 
 /**
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>

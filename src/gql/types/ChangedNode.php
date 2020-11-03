@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license/
  */
 
-namespace craft\gatsby\gql\types;
+namespace craft\gatsbyhelper\gql\types;
 
 use craft\gql\base\ObjectType;
 use craft\gql\GqlEntityRegistry;

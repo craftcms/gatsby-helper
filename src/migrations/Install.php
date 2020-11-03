@@ -5,12 +5,12 @@
  * @license MIT
  */
 
-namespace craft\gatsby\migrations;
+namespace craft\gatsbyhelper\migrations;
 
 use Craft;
 use craft\awss3\Volume;
 use craft\db\Migration;
-use craft\gatsby\db\Table;
+use craft\gatsbyhelper\db\Table;
 use craft\helpers\Json;
 use craft\services\Volumes;
 

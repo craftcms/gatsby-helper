@@ -8,15 +8,15 @@
  * @copyright Copyright (c) 2020 Pixel & Tonic, Inc. <support@pixelandtonic.com>
  */
 
-namespace craft\gatsby\services;
+namespace craft\gatsbyhelper\services;
 
 use craft\base\Component;
 use craft\base\Element;
 use craft\db\Query;
 use craft\db\Table as CraftTable;
 use craft\elements\MatrixBlock;
-use craft\gatsby\db\Table;
-use craft\gatsby\events\RegisterIgnoredTypesEvent;
+use craft\gatsbyhelper\db\Table;
+use craft\gatsbyhelper\events\RegisterIgnoredTypesEvent;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\Db;
 use yii\db\Expression;
@@ -39,7 +39,7 @@ class Deltas extends Component
      * ---
      * ```php
      * use craft\events\RegisterIgnoredTypesEvent;
-     * use craft\gatsby\services\Deltas;
+     * use craft\gatsbyhelper\services\Deltas;
      * use yii\base\Event;
      *
      * Event::on(Deltas::class, Deltas::EVENT_REGISTER_IGNORED_TYPES, function(RegisterIgnoredTypesEvent $event) {

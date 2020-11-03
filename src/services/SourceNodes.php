@@ -8,10 +8,10 @@
  * @copyright Copyright (c) 2020 Pixel & Tonic, Inc. <support@pixelandtonic.com>
  */
 
-namespace craft\gatsby\services;
+namespace craft\gatsbyhelper\services;
 
 use craft\base\Component;
-use craft\gatsby\events\RegisterSourceNodeTypesEvent;
+use craft\gatsbyhelper\events\RegisterSourceNodeTypesEvent;
 use craft\gql\interfaces\elements\Asset as AssetInterface;
 use craft\gql\interfaces\elements\Category as CategoryInterface;
 use craft\gql\interfaces\elements\Entry as EntryInterface;
@@ -37,7 +37,7 @@ class SourceNodes extends Component
      * ---
      * ```php
      * use craft\events\RegisterSourceNodeTypesEvent;
-     * use craft\gatsby\services\SourceNodes;
+     * use craft\gatsbyhelper\services\SourceNodes;
      * use yii\base\Event;
      *
      * Event::on(SourceNodes::class, SourceNodes::EVENT_REGISTER_SOURCE_NODE_TYPES, function(RegisterSourceNodeTypesEvent $event) {
