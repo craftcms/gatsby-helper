@@ -30,7 +30,7 @@
         }
     },
     "extra": {
-        "name": "Gatsby",
+        "name": "Gatsby Helper",
         "handle": "gatsby-helper",
         "developerUrl": "https://craftcms.com/"
     }
