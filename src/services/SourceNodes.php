@@ -25,6 +25,7 @@ use craft\gql\interfaces\elements\User as UserInterface;
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 1.0.0
  *
+ * @property-read array|mixed $sourceNodeTypes
  * @property-read array[]|mixed $sourcingData
  */
 class SourceNodes extends Component

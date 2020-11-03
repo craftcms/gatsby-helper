@@ -1,10 +1,11 @@
-{% import "_includes/forms" as forms %}
+{% import '_includes/forms' as forms %}
 
-{{ forms.textField({
+{{ forms.autosuggestField({
     first: true,
-    label: "Preview Server URL",
-    instructions: "The Gatsby preview server URL, including the protocol and port.",
+    label: 'Preview Server URL'|t('gatsby-helper'),
+    instructions: 'The Gatsby preview server URL, including the protocol and port.'|t('gatsby-helper'),
     name: 'previewServerUrl',
-    value: settings.previewServerUrl
+    value: settings.previewServerUrl,
+    suggestEnvVars: true,
+    suggestAliases: true,
 }) }}
-

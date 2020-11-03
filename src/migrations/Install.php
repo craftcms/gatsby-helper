@@ -7,7 +7,6 @@
 
 namespace craft\gatsbyhelper\migrations;
 
-use craft\awss3\Volume;
 use craft\db\Migration;
 use craft\gatsbyhelper\db\Table;
 

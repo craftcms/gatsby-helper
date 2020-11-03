@@ -19,6 +19,7 @@ use craft\gatsbyhelper\db\Table;
 use craft\gatsbyhelper\events\RegisterIgnoredTypesEvent;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\Db;
+use DateTime;
 use yii\db\Expression;
 
 /**
@@ -27,6 +28,7 @@ use yii\db\Expression;
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 1.0.0
  *
+ * @property-read null|string|false $lastContentUpdateTime
  * @property-read string $version
  */
 class Deltas extends Component
@@ -88,7 +90,6 @@ class Deltas extends Component
      *
      * @param string $timestamp
      * @return array
-     * @throws \yii\base\Exception
      */
     public function getUpdatedNodesSinceTimeStamp(string $timestamp): array
     {
@@ -108,7 +109,6 @@ class Deltas extends Component
      *
      * @param string $timestamp
      * @return array
-     * @throws \yii\base\Exception
      */
     public function getDeletedNodesSinceTimeStamp(string $timestamp): array
     {
@@ -124,7 +124,6 @@ class Deltas extends Component
      *
      * @param Element $element
      * @return bool
-     * @throws \yii\db\Exception
      */
     public function registerDeletedElement(Element $element): bool
     {
@@ -138,7 +137,7 @@ class Deltas extends Component
         return (bool)Db::insert(Table::DELETED_ELEMENTS, [
             'elementId' => $element->id,
             'typeName' => $element->getGqlTypeName(),
-            'dateDeleted' => Db::prepareDateForDb(new \DateTime())
+            'dateDeleted' => Db::prepareDateForDb(new DateTime())
         ], false);
     }
 

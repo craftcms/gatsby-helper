@@ -7,7 +7,7 @@
 
 namespace craft\gatsbyhelper\gql\resolvers;
 
-use craft\gatsbyhelper\Plugin as Gatsby;
+use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
 use GraphQL\Type\Definition\ResolveInfo;
 
@@ -21,7 +21,7 @@ class SourceNode extends Resolver
 {
     public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo)
     {
-        return Gatsby::$plugin->getSourceNodes()->getSourceNodeTypes();
+        return Plugin::getInstance()->getSourceNodes()->getSourceNodeTypes();
     }
 
 }

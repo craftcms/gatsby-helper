@@ -37,31 +37,22 @@ use yii\base\Event;
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 1.0.0
  *
- * @property  SourceNodes $data
- * @property  Deltas $deltas
+ * @method Settings getSettings()
+ * @property-read Deltas $deltas
+ * @property-read Settings $settings
+ * @property-read SourceNodes $sourceNodes
  */
 class Plugin extends \craft\base\Plugin
 {
-    // Static Properties
-    // =========================================================================
-
     /**
-     * @var Gatsby
-     */
-    public static $plugin;
-
-    // Public Properties
-    // =========================================================================
-
-    /**
-     * @var string
+     * @inheritdoc
      */
     public $schemaVersion = '1.0.0';
 
+    /**
+     * @inheritdoc
+     */
     public $hasCpSettings = true;
-
-    // Public Methods
-    // =========================================================================
 
     /**
      * @inheritdoc
@@ -69,8 +60,6 @@ class Plugin extends \craft\base\Plugin
     public function init()
     {
         parent::init();
-        self::$plugin = $this;
-
         $this->_registerServices();
         $this->_registerGqlQueries();
         $this->_registerGqlComponents();
@@ -79,10 +68,9 @@ class Plugin extends \craft\base\Plugin
     }
 
     /**
-     * Return the SrouceNodes service.
+     * Return the SourceNodes service.
      *
      * @return SourceNodes
-     * @throws \yii\base\InvalidConfigException
      */
     public function getSourceNodes(): SourceNodes
     {
@@ -92,8 +80,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * Return the Deltas service.
      *
-     * @return SourceNodes
-     * @throws \yii\base\InvalidConfigException
+     * @return Deltas
      */
     public function getDeltas(): Deltas
     {
@@ -113,12 +100,9 @@ class Plugin extends \craft\base\Plugin
      */
     protected function settingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate(
-            'gatsby/settings',
-            [
-                'settings' => $this->getSettings(),
-            ]
-        );
+        return Craft::$app->getView()->renderTemplate('gatsby-helper/settings', [
+            'settings' => $this->getSettings(),
+        ]);
     }
 
     /**
@@ -136,7 +120,7 @@ class Plugin extends \craft\base\Plugin
     }
 
     /**
-     * Register the Gql schmea components
+     * Register the Gql schema components
      */
     private function _registerGqlComponents()
     {
@@ -167,7 +151,7 @@ class Plugin extends \craft\base\Plugin
      */
     private function _registerLivePreviewListener()
     {
-        $previewUrl = $this->getSettings()->previewServerUrl;
+        $previewUrl = Craft::parseEnv($this->getSettings()->previewServerUrl);
 
         if (!empty($previewUrl)) {
             Event::on(Entry::class, Entry::EVENT_REGISTER_PREVIEW_TARGETS, function(RegisterPreviewTargetsEvent $event) use ($previewUrl) {

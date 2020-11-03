@@ -9,7 +9,7 @@
 namespace craft\gatsbyhelper\gql\resolvers;
 
 use Craft;
-use craft\gatsbyhelper\Plugin as Gatsby;
+use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
 use GraphQL\Type\Definition\ResolveInfo;
 
@@ -23,7 +23,7 @@ class UpdatedNode extends Resolver
 {
     public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo)
     {
-        $updatedNodes = Gatsby::$plugin->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since']);
+        $updatedNodes = Plugin::getInstance()->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since']);
         $resolved = [];
 
         foreach ($updatedNodes as $elementId => $elementType) {
