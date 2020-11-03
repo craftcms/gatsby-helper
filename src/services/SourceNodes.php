@@ -115,5 +115,5 @@ class SourceNodes extends Component
         $this->trigger(self::EVENT_REGISTER_SOURCE_NODE_TYPES, $event);
 
         return $event->types;
-   }
+    }
 }

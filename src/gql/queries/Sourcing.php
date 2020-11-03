@@ -8,13 +8,13 @@
 namespace craft\gatsbyhelper\gql\queries;
 
 use Craft;
-use craft\gatsbyhelper\Plugin as Gatsby;
+use craft\gatsbyhelper\gql\resolvers\DeletedNode as DeletedNodeResolver;
 use craft\gatsbyhelper\gql\resolvers\SourceNode as SourceNodeResolver;
 use craft\gatsbyhelper\gql\resolvers\UpdatedNode as UpdatedNodeResolver;
-use craft\gatsbyhelper\gql\resolvers\DeletedNode as DeletedNodeResolver;
 use craft\gatsbyhelper\gql\types\ChangedNode;
-use craft\gatsbyhelper\helpers\Gql as GqlHelper;
 use craft\gatsbyhelper\gql\types\SourceNode;
+use craft\gatsbyhelper\helpers\Gql as GqlHelper;
+use craft\gatsbyhelper\Plugin as Gatsby;
 use craft\gql\base\Query;
 use craft\gql\types\DateTime;
 use GraphQL\Type\Definition\Type;

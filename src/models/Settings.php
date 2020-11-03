@@ -1,11 +1,10 @@
 <?php
+
 namespace craft\gatsbyhelper\models;
 
-use \PHP_Typography\Settings\Dash_Style;
-use \PHP_Typography\Settings\Quote_Style;
-
 use craft\base\Model;
-use craft\validators\ArrayValidator;
+use PHP_Typography\Settings\Dash_Style;
+use PHP_Typography\Settings\Quote_Style;
 
 /**
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>

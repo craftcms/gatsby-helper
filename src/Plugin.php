@@ -80,6 +80,7 @@ class Plugin extends \craft\base\Plugin
 
     /**
      * Return the SrouceNodes service.
+     *
      * @return SourceNodes
      * @throws \yii\base\InvalidConfigException
      */
@@ -90,6 +91,7 @@ class Plugin extends \craft\base\Plugin
 
     /**
      * Return the Deltas service.
+     *
      * @return SourceNodes
      * @throws \yii\base\InvalidConfigException
      */
