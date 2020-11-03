@@ -1,4 +1,4 @@
-# Gatsby Plugin for Craft CMS
+# Gatsby Helper Plugin for Craft CMS
 
 Craft plugin that enables support for the [Craft Gatsby source plugin](https://github.com/craftcms/gatsby-source-craftcms).
 
