@@ -31,7 +31,7 @@
     },
     "extra": {
         "name": "Gatsby",
-        "handle": "gatsby",
+        "handle": "gatsby-helper",
         "developerUrl": "https://craftcms.com/"
     }
 }

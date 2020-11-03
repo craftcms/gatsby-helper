@@ -26,7 +26,7 @@ cd /path/to/my-project.test
 composer require craftcms/gatsby-helper
 
 # tell Craft to install the plugin
-./craft install/plugin craft-gatsby
+./craft install/plugin gatsby-helper
 ```
 
 ## Configuration
