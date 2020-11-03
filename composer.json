@@ -1,5 +1,5 @@
 {
-    "name": "craftcms/craft-gatsby",
+    "name": "craftcms/gatsby-helper",
     "description": "Plugin for enabling support for the Gatsby Craft CMS source plugin.",
     "type": "craft-plugin",
     "version": "1.0.0-beta.1",
@@ -11,8 +11,8 @@
         "gatsby"
     ],
     "support": {
-        "docs": "https://github.com/craftcms/craft-gatsby",
-        "issues": "https://github.com/craftcms/craft-gatsby/issues"
+        "docs": "https://github.com/craftcms/gatsby-helper",
+        "issues": "https://github.com/craftcms/gatsby-helper/issues"
     },
     "license": "MIT",
     "authors": [

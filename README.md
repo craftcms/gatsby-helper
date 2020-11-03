@@ -23,7 +23,7 @@ Open your terminal and run the following commands:
 cd /path/to/my-project.test
 
 # tell Composer to load the plugin
-composer require craftcms/craft-gatsby
+composer require craftcms/gatsby-helper
 
 # tell Craft to install the plugin
 ./craft install/plugin craft-gatsby
