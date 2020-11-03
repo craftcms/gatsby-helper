@@ -1,6 +1,6 @@
 # Gatsby Helper Plugin for Craft CMS
 
-Craft plugin that enables support for the [Craft Gatsby source plugin](https://github.com/craftcms/gatsby-source-craftcms).
+Craft plugin that enables support for the [Craft Gatsby source plugin](https://github.com/craftcms/gatsby-source-craft).
 
 ## Requirements
 
@@ -39,7 +39,7 @@ To enable support for the Craft CMS source plugin for Gatsby, you’ll need a fe
 
 For configuring Craft’s GraphQL endpoint, schema, and tokens, see https://craftcms.com/docs/3.x/graphql.html#getting-started.
 
-Once your endpoint and schema is established, be sure to enable **Allow discovery of sourcing data for Gatsby** in the **Gatsby** section of the schema you’d like to query with the [gatsby-source-craftcms](https://github.com/craftcms/gatsby-source-craftcms) Gatsby plugin.
+Once your endpoint and schema is established, be sure to enable **Allow discovery of sourcing data for Gatsby** in the **Gatsby** section of the schema you’d like to query with the [gatsby-source-craft](https://github.com/craftcms/gatsby-source-craft) Gatsby plugin.
 
 You may optionally designate a **Preview Server URL** in the plugin settings.
 
