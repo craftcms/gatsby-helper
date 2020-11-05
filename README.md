@@ -1,6 +1,8 @@
-# Gatsby Helper Plugin for Craft CMS
+<p align="center"><img src="./src/icon.svg" width="100" height="100" alt="Gatsby logo"></p>
 
-Craft plugin that enables support for the [Craft Gatsby source plugin](https://github.com/craftcms/gatsby-source-craft).
+<h1 align="center">Gatsby Hepler</h1>
+
+This plugin enables support for the [gatsby-soucre-craft](https://github.com/craftcms/gatsby-source-craft) Gatsby source plugin. Combined, they provide an integration between Craft CMS and [Gatsby](https://www.gatsbyjs.com/).
 
 ## Requirements
 
@@ -12,7 +14,7 @@ You can install this plugin from the Plugin Store or with Composer.
 
 #### From the Plugin Store
 
-Navigate to the Plugin Store in your project’s control panel and search for “Gatsby”. Then choose **Install** from in its modal window.
+Navigate to the Plugin Store in your project’s control panel and search for “Gatsby Helper”. Then choose **Install** from in its modal window.
 
 #### With Composer
 
