@@ -2,7 +2,7 @@
 
 <h1 align="center">Gatsby Hepler</h1>
 
-This plugin enables support for the [gatsby-soucre-craft](https://github.com/craftcms/gatsby-source-craft) Gatsby source plugin. Combined, they provide an integration between Craft CMS and [Gatsby](https://www.gatsbyjs.com/).
+This plugin enables support for the [gatsby-source-craft](https://github.com/craftcms/gatsby-source-craft) Gatsby source plugin. Combined, they provide an integration between Craft CMS and [Gatsby](https://www.gatsbyjs.com/).
 
 ## Requirements
 
