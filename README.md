@@ -1,6 +1,6 @@
 <p align="center"><img src="./src/icon.svg" width="100" height="100" alt="Gatsby logo"></p>
 
-<h1 align="center">Gatsby Hepler</h1>
+<h1 align="center">Gatsby Helper</h1>
 
 This plugin enables support for the [gatsby-source-craft](https://github.com/craftcms/gatsby-source-craft) Gatsby source plugin. Combined, they provide an integration between Craft CMS and [Gatsby](https://www.gatsbyjs.com/).
 
