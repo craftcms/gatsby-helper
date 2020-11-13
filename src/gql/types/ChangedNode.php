@@ -62,6 +62,11 @@ class ChangedNode extends ObjectType
                 'type' => Type::nonNull(Type::id()),
                 'description' => 'Node id.',
             ],
+            'siteId' => [
+                'name' => 'siteId',
+                'type' => Type::id(),
+                'description' => 'Site id.',
+            ],
         ], self::getName());
     }
 }

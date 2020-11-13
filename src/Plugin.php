@@ -184,7 +184,8 @@ class Plugin extends \craft\base\Plugin
                                 const payload = {
                                     operation: 'update',
                                     typeName: '$gqlTypeName',
-                                    id: currentlyPreviewing
+                                    id: currentlyPreviewing,
+                                    siteId: {$element->siteId}
                                 };
                                  
                                 if (doPreview) {
