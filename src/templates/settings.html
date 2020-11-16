@@ -2,10 +2,10 @@
 
 {{ forms.autosuggestField({
     first: true,
-    label: 'Preview Server URL'|t('gatsby-helper'),
-    instructions: 'The Gatsby preview server URL, including the protocol and port.'|t('gatsby-helper'),
-    name: 'previewServerUrl',
-    value: settings.previewServerUrl,
+    label: 'Preview webhook target URL'|t('gatsby-helper'),
+    instructions: 'The Gatsby webhook target URL.'|t('gatsby-helper'),
+    name: 'webhookTarget',
+    value: settings.webhookTarget,
     suggestEnvVars: true,
     suggestAliases: true,
 }) }}
