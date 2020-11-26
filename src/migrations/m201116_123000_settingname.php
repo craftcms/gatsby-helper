@@ -4,20 +4,12 @@ namespace craft\gatsbyhelper\migrations;
 
 use Craft;
 use craft\db\Migration;
-use craft\db\Query;
-use craft\db\Table;
-use craft\helpers\Json;
-use craft\helpers\Localization;
-use craft\helpers\MigrationHelper;
-use yii\base\InvalidArgumentException;
 
 /**
  * m201116_123000_settingname migration.
  */
 class m201116_123000_settingname extends Migration
 {
-    private $_usersTable;
-    private $_prefsTable;
 
     /**
      * @inheritdoc
