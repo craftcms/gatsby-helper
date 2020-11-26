@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added the correct header to trigger Gatsby Cloud previews correctly.
+
 ### Changed
 - Renamed the `previewServerUrl` setting to `webhookTarget`.
 

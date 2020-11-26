@@ -181,6 +181,7 @@ class Plugin extends \craft\base\Plugin
                             
                             http.open('POST', "$webhookTarget", true);
                             http.setRequestHeader('Content-type', 'application/json');
+                            http.setRequestHeader('x-preview-update-source', 'Craft CMS');
                             http.send(JSON.stringify(payload));        
                         }
                         
