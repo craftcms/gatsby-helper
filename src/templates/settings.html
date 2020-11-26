@@ -2,10 +2,10 @@
 
 {{ forms.autosuggestField({
     first: true,
-    label: 'Preview webhook target URL'|t('gatsby-helper'),
-    instructions: 'The Gatsby webhook target URL.'|t('gatsby-helper'),
-    name: 'webhookTarget',
-    value: settings.webhookTarget,
+    label: 'Preview Webhook URL'|t('gatsby-helper'),
+    instructions: 'The Gatsby webhook URL that should be called when content changes in Live Preview.'|t('gatsby-helper'),
+    name: 'previewWebhookUrl',
+    value: settings.previewWebhookUrl,
     suggestEnvVars: true,
     suggestAliases: true,
 }) }}

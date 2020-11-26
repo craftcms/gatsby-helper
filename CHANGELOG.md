@@ -2,11 +2,14 @@
 
 ## Unreleased
 
+> {note} You will need to ensure that your “Preview Webhook URL” setting is set correctly after updating.
+
 ### Added
 - Added the correct header to trigger Gatsby Cloud previews correctly. ([#5](https://github.com/craftcms/gatsby-helper/issues/5))
+- Added the “Preview Webhook URL” setting.
 
-### Changed
-- Renamed the `previewServerUrl` setting to `webhookTarget`.
+### Removed
+- Removed the “Preview Server URL” setting.
 
 ### Fixed
 - Fixed a bug where queries that would not be defined by the GraphQL schema were exposed to Gatsby, anyway.

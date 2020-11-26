@@ -142,10 +142,10 @@ class Plugin extends \craft\base\Plugin
      */
     private function _registerLivePreviewListener()
     {
-        $webhookTarget = Craft::parseEnv($this->getSettings()->webhookTarget);
+        $previewWebhookUrl = Craft::parseEnv($this->getSettings()->previewWebhookUrl);
 
-        if (!empty($webhookTarget)) {
-            Event::on(Entry::class, Entry::EVENT_REGISTER_PREVIEW_TARGETS, function(RegisterPreviewTargetsEvent $event) use ($webhookTarget) {
+        if (!empty($previewWebhookUrl)) {
+            Event::on(Entry::class, Entry::EVENT_REGISTER_PREVIEW_TARGETS, function(RegisterPreviewTargetsEvent $event) use ($previewWebhookUrl) {
                 /** @var Element $element */
                 $element = $event->sender;
 
@@ -157,7 +157,7 @@ class Plugin extends \craft\base\Plugin
                         let currentlyPreviewing;
                         
                         const alertGatsby = async function (event, doPreview) {
-                            const url = doPreview ? event.previewTarget.url : '$webhookTarget';
+                            const url = doPreview ? event.previewTarget.url : '$previewWebhookUrl';
                             const compareUrl = new URL(url);
                                                         
                             if (doPreview) {
@@ -179,7 +179,7 @@ class Plugin extends \craft\base\Plugin
                                 currentlyPreviewing = null;
                             }
                             
-                            http.open('POST', "$webhookTarget", true);
+                            http.open('POST', "$previewWebhookUrl", true);
                             http.setRequestHeader('Content-type', 'application/json');
                             http.setRequestHeader('x-preview-update-source', 'Craft CMS');
                             http.send(JSON.stringify(payload));        

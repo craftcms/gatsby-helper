@@ -22,5 +22,5 @@ class Settings extends Model
      * The full URL where
      * @var string
      */
-    public $webhookTarget = '';
+    public $previewWebhookUrl = '';
 }

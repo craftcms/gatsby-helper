@@ -4,6 +4,8 @@ namespace craft\gatsbyhelper\migrations;
 
 use Craft;
 use craft\db\Migration;
+use craft\helpers\ArrayHelper;
+use craft\helpers\StringHelper;
 
 /**
  * m201116_123000_settingname migration.
@@ -22,9 +24,16 @@ class m201116_123000_settingname extends Migration
         $projectConfig->muteEvents = true;
 
         if (version_compare($schemaVersion, '1.0.1', '<')) {
-            $message = '[Gatsby helper] Migrating previewServerUrl setting.';
-            $projectConfig->set('plugins.gatsby-helper.settings.webhookTarget', $projectConfig->get('plugins.gatsby-helper.settings.previewServerUrl'), $message);
-            $projectConfig->remove('plugins.gatsby-helper.settings.previewServerUrl', $message);
+            $settings = $projectConfig->get('plugins.gatsby-helper.settings') ?? [];
+            if (array_key_exists('previewServerUrl', $settings)) {
+                $url = ArrayHelper::remove($settings, 'previewServerUrl');
+                // If it's not set to an environment variable or alias, add /__refresh to it
+                if (isset($url[0]) && !in_array($url[0], ['$', '@'])) {
+                    $url = StringHelper::ensureRight($url, '/__refresh');
+                }
+                $settings['previewWebhookUrl'] = $url;
+                $projectConfig->set('plugins.gatsby-helper.settings', $settings, '[Gatsby helper] Migrating previewServerUrl setting.');
+            }
         }
 
         $projectConfig->muteEvents = false;
