@@ -3,7 +3,7 @@
 ## Unreleased
 
 ### Added
-- Added the correct header to trigger Gatsby Cloud previews correctly.
+- Added the correct header to trigger Gatsby Cloud previews correctly. ([#5](https://github.com/craftcms/gatsby-helper/issues/5))
 
 ### Changed
 - Renamed the `previewServerUrl` setting to `webhookTarget`.
