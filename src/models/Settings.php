@@ -14,6 +14,13 @@ class Settings extends Model
      * The address of the preview server, including protocol and port.
      *
      * @var string
+     * @deprecated
      */
     public $previewServerUrl = '';
+
+    /**
+     * The full URL where
+     * @var string
+     */
+    public $previewWebhookUrl = '';
 }

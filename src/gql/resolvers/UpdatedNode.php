@@ -11,6 +11,7 @@ namespace craft\gatsbyhelper\gql\resolvers;
 use Craft;
 use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
+use craft\helpers\ElementHelper;
 use GraphQL\Type\Definition\ResolveInfo;
 
 /**
@@ -30,10 +31,13 @@ class UpdatedNode extends Resolver
             $element = Craft::$app->getElements()->getElementById($elementId, $elementType);
 
             if ($element) {
-                $resolved[] = [
-                    'nodeId' => $elementId,
-                    'nodeType' => $element->getGqlTypeName()
-                ];
+                foreach (ElementHelper::supportedSitesForElement($element) as $site) {
+                    $resolved[] = [
+                        'nodeId' => $elementId,
+                        'nodeType' => $element->getGqlTypeName(),
+                        'siteId' => $site['siteId']
+                    ];
+                }
             }
         }
 

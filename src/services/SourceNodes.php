@@ -18,6 +18,7 @@ use craft\gql\interfaces\elements\Entry as EntryInterface;
 use craft\gql\interfaces\elements\GlobalSet as GlobalSetInterface;
 use craft\gql\interfaces\elements\Tag as TagInterface;
 use craft\gql\interfaces\elements\User as UserInterface;
+use craft\helpers\Gql;
 
 /**
  * SourceNodes Service
@@ -64,50 +65,67 @@ class SourceNodes extends Component
      */
     public function getSourceNodeTypes(): array
     {
-        $nodeTypes = [
-            [
+        $nodeTypes = [];
+
+        if (Gql::canQueryEntries()) {
+            $nodeTypes[] = [
                 'node' => 'entry',
                 'list' => 'entries',
                 'filterArgument' => 'type',
                 'filterTypeExpression' => '(?:.+)_(.+)_Entry+$',
                 'targetInterface' => EntryInterface::getName(),
-            ],
-            [
+            ];
+        }
+
+        if (Gql::canQueryAssets()) {
+            $nodeTypes[] = [
                 'node' => 'asset',
                 'list' => 'assets',
                 'filterArgument' => 'volume',
                 'filterTypeExpression' => '(.+)_Asset$',
                 'targetInterface' => AssetInterface::getName(),
-            ],
-            [
-                'node' => 'tag',
-                'list' => 'tags',
-                'filterArgument' => 'group',
-                'filterTypeExpression' => '(.+)_Tag$',
-                'targetInterface' => TagInterface::getName(),
-            ],
-            [
+            ];
+        }
+
+        if (Gql::canQueryCategories()) {
+            $nodeTypes[] = [
                 'node' => 'category',
                 'list' => 'categories',
                 'filterArgument' => 'group',
                 'filterTypeExpression' => '(.+)_Category$',
                 'targetInterface' => CategoryInterface::getName(),
-            ],
-            [
-                'node' => 'user',
-                'list' => 'users',
-                'filterArgument' => '',
-                'filterTypeExpression' => '',
-                'targetInterface' => UserInterface::getName(),
-            ],
-            [
+            ];
+        }
+
+        if (Gql::canQueryGlobalSets()) {
+            $nodeTypes[] = [
                 'node' => 'globalSet',
                 'list' => 'globalSets',
                 'filterArgument' => 'handle',
                 'filterTypeExpression' => '(.+)_GlobalSet$',
                 'targetInterface' => GlobalSetInterface::getName(),
-            ],
-        ];
+            ];
+        }
+
+        if (Gql::canQueryTags()) {
+            $nodeTypes[] = [
+                'node' => 'tag',
+                'list' => 'tags',
+                'filterArgument' => 'group',
+                'filterTypeExpression' => '(.+)_Tag$',
+                'targetInterface' => TagInterface::getName(),
+            ];
+        }
+
+        if (Gql::canQueryUsers()) {
+            $nodeTypes[] = [
+                'node' => 'user',
+                'list' => 'users',
+                'filterArgument' => '',
+                'filterTypeExpression' => '',
+                'targetInterface' => UserInterface::getName(),
+            ];
+        }
 
         $event = new RegisterSourceNodeTypesEvent([
             'types' => $nodeTypes

@@ -56,6 +56,11 @@ class Sourcing extends Query
                 },
                 'description' => 'Return the last time content was updated on this site.'
             ],
+            'primarySiteId' => [
+                'type' => Type::string(),
+                'resolve' => function () { return Craft::$app->getSites()->getPrimarySite()->handle; },
+                'description' => 'Return the primary site id.'
+            ],
             'nodesUpdatedSince' => [
                 'type' => Type::listOf(ChangedNode::getType()),
                 'args' => [

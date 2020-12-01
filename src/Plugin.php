@@ -25,15 +25,6 @@ use craft\services\Gql;
 use yii\base\Event;
 
 /**
- * Craft plugins are very much like little applications in and of themselves. We’ve made
- * it as simple as we can, but the training wheels are off. A little prior knowledge is
- * going to be required to write a plugin.
- *
- * For the purposes of the plugin docs, we’re going to assume that you know PHP and SQL,
- * as well as some semi-advanced concepts like object-oriented programming and PHP namespaces.
- *
- * https://docs.craftcms.com/v3/extend/
- *
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 1.0.0
  *
@@ -47,7 +38,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
-    public $schemaVersion = '1.0.0';
+    public $schemaVersion = '1.0.1';
 
     /**
      * @inheritdoc
@@ -151,52 +142,47 @@ class Plugin extends \craft\base\Plugin
      */
     private function _registerLivePreviewListener()
     {
-        $previewUrl = Craft::parseEnv($this->getSettings()->previewServerUrl);
+        $previewWebhookUrl = Craft::parseEnv($this->getSettings()->previewWebhookUrl);
 
-        if (!empty($previewUrl)) {
-            Event::on(Entry::class, Entry::EVENT_REGISTER_PREVIEW_TARGETS, function(RegisterPreviewTargetsEvent $event) use ($previewUrl) {
+        if (!empty($previewWebhookUrl)) {
+            Event::on(Entry::class, Entry::EVENT_REGISTER_PREVIEW_TARGETS, function(RegisterPreviewTargetsEvent $event) use ($previewWebhookUrl) {
                 /** @var Element $element */
                 $element = $event->sender;
 
-                $url = parse_url(StringHelper::toLowerCase($previewUrl));
-                $compare = $url['scheme'] . '://' . $url['host'] . ($url['port'] !== 80 ? ':' . $url['port'] : '');
-
                 $gqlTypeName = $element->getGqlTypeName();
                 $elementId = $element->getSourceId();
-                $refreshUrl = StringHelper::removeRight($previewUrl, '/') . '/__refresh';
 
                 $js = <<<JS
                     {
                         let currentlyPreviewing;
                         
                         const alertGatsby = async function (event, doPreview) {
-                            const url = doPreview ? event.previewTarget.url : '$refreshUrl';
+                            const url = doPreview ? event.previewTarget.url : '$previewWebhookUrl';
                             const compareUrl = new URL(url);
-                            
-                            if ((doPreview || currentlyPreviewing) && (!doPreview || ("$compare" == compareUrl.protocol + '//' + compareUrl.host))) {
-                            
-                                if (doPreview) {
-                                    currentlyPreviewing = $elementId;
-                                }
-                                    
-                                const http = new XMLHttpRequest();
-                                
-                                const payload = {
-                                    operation: 'update',
-                                    typeName: '$gqlTypeName',
-                                    id: currentlyPreviewing
-                                };
-                                 
-                                if (doPreview) {
-                                    payload.token = await event.target.draftEditor.getPreviewToken();
-                                } else {
-                                    currentlyPreviewing = null;
-                                }
-                                
-                                http.open('POST', "$refreshUrl", true);
-                                http.setRequestHeader('Content-type', 'application/json');
-                                http.send(JSON.stringify(payload));        
+                                                        
+                            if (doPreview) {
+                                currentlyPreviewing = $elementId;
                             }
+                                
+                            const http = new XMLHttpRequest();
+                            
+                            const payload = {
+                                operation: 'update',
+                                typeName: '$gqlTypeName',
+                                id: currentlyPreviewing,
+                                siteId: {$element->siteId}
+                            };
+                             
+                            if (doPreview) {
+                                payload.token = await event.target.draftEditor.getPreviewToken();
+                            } else {
+                                currentlyPreviewing = null;
+                            }
+                            
+                            http.open('POST', "$previewWebhookUrl", true);
+                            http.setRequestHeader('Content-type', 'application/json');
+                            http.setRequestHeader('x-preview-update-source', 'Craft CMS');
+                            http.send(JSON.stringify(payload));        
                         }
                         
                         Garnish.on(Craft.Preview, 'beforeUpdateIframe', function(event) {
