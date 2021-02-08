@@ -1,5 +1,10 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+
+### Fixed
+- Fixed a Javascript error that would occur when saving an entry without previewing it. ([#6](https://github.com/craftcms/gatsby-helper/issues/6))
+
 ## 1.0.0-beta.2 - 2020-12-01
 
 > {note} You will need to ensure that your “Preview Webhook URL” setting is set correctly after updating.

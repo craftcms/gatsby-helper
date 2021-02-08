@@ -164,6 +164,10 @@ class Plugin extends \craft\base\Plugin
                                 currentlyPreviewing = $elementId;
                             }
                                 
+                            if (!currentlyPreviewing) {
+                                return;
+                            }
+                            
                             const http = new XMLHttpRequest();
                             
                             const payload = {
