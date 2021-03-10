@@ -18,6 +18,7 @@ use craft\events\RegisterGqlSchemaComponentsEvent;
 use craft\events\RegisterPreviewTargetsEvent;
 use craft\gatsbyhelper\gql\queries\Sourcing as SourcingDataQueries;
 use craft\gatsbyhelper\models\Settings;
+use craft\gatsbyhelper\services\Builds;
 use craft\gatsbyhelper\services\Deltas;
 use craft\gatsbyhelper\services\SourceNodes;
 use craft\helpers\StringHelper;
@@ -79,6 +80,16 @@ class Plugin extends \craft\base\Plugin
     }
 
     /**
+     * Return the Builds service.
+     *
+     * @return Deltas
+     */
+    public function getBuilds(): Builds
+    {
+        return $this->get('builds');
+    }
+
+    /**
      * @inheritdoc
      */
     protected function createSettingsModel()
@@ -135,6 +146,13 @@ class Plugin extends \craft\base\Plugin
 
             $this->getDeltas()->registerDeletedElement($element);
         });
+
+        Event::on(Element::class, Element::EVENT_AFTER_SAVE, function(Event $event) {
+            /** @var Element $element */
+            $element = $event->sender;
+
+            $this->getBuilds()->triggerBuild();
+        });
     }
 
     /**
@@ -162,6 +180,10 @@ class Plugin extends \craft\base\Plugin
                                                         
                             if (doPreview) {
                                 currentlyPreviewing = $elementId;
+                            }
+                            
+                            if (!currentlyPreviewing) {
+                                return;
                             }
                                 
                             if (!currentlyPreviewing) {
@@ -219,6 +241,9 @@ JS;
             ],
             'deltas' => [
                 'class' => Deltas::class,
+            ],
+            'builds' => [
+                'class' => Builds::class,
             ],
         ]);
     }

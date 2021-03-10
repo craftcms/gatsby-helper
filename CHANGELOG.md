@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added a new “Build Webhook URL” setting that triggers Gatsby site builds on element save, if set. ([#7](https://github.com/craftcms/gatsby-helper/issues/7))
+
 ### Fixed
 - Fixed a Javascript error that would occur when saving an entry without previewing it. ([#6](https://github.com/craftcms/gatsby-helper/issues/6))
 

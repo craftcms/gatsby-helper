@@ -9,3 +9,12 @@
     suggestEnvVars: true,
     suggestAliases: true,
 }) }}
+
+{{ forms.autosuggestField({
+    label: 'Build Webhook URL'|t('gatsby-helper'),
+    instructions: 'The Gatsby webhook URL that should be called when an element is saved.'|t('gatsby-helper'),
+    name: 'buildWebhookUrl',
+    value: settings.buildWebhookUrl,
+    suggestEnvVars: true,
+    suggestAliases: true,
+}) }}
