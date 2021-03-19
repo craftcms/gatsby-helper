@@ -61,14 +61,14 @@ class SourceNodes extends Component
     /**
      * Return the query filters to use for querying source data with Gatsby
      *
-     * @return mixed
+     * @return array
      */
     public function getSourceNodeTypes(): array
     {
         $nodeTypes = [];
 
         if (Gql::canQueryEntries()) {
-            $nodeTypes[] = [
+            $nodeTypes[EntryInterface::getName()] = [
                 'node' => 'entry',
                 'list' => 'entries',
                 'filterArgument' => 'type',
@@ -78,7 +78,7 @@ class SourceNodes extends Component
         }
 
         if (Gql::canQueryAssets()) {
-            $nodeTypes[] = [
+            $nodeTypes[AssetInterface::getName()] = [
                 'node' => 'asset',
                 'list' => 'assets',
                 'filterArgument' => 'volume',
@@ -88,7 +88,7 @@ class SourceNodes extends Component
         }
 
         if (Gql::canQueryCategories()) {
-            $nodeTypes[] = [
+            $nodeTypes[CategoryInterface::getName()] = [
                 'node' => 'category',
                 'list' => 'categories',
                 'filterArgument' => 'group',
@@ -98,7 +98,7 @@ class SourceNodes extends Component
         }
 
         if (Gql::canQueryGlobalSets()) {
-            $nodeTypes[] = [
+            $nodeTypes[GlobalSetInterface::getName()] = [
                 'node' => 'globalSet',
                 'list' => 'globalSets',
                 'filterArgument' => 'handle',
@@ -108,7 +108,7 @@ class SourceNodes extends Component
         }
 
         if (Gql::canQueryTags()) {
-            $nodeTypes[] = [
+            $nodeTypes[TagInterface::getName()] = [
                 'node' => 'tag',
                 'list' => 'tags',
                 'filterArgument' => 'group',
@@ -118,7 +118,7 @@ class SourceNodes extends Component
         }
 
         if (Gql::canQueryUsers()) {
-            $nodeTypes[] = [
+            $nodeTypes[UserInterface::getName()] = [
                 'node' => 'user',
                 'list' => 'users',
                 'filterArgument' => '',

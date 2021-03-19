@@ -1,5 +1,13 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+
+### Fixed
+- Fixed a bug where sometimes the helper plugin could cause Gatsby incremental content sourcing to fail. ([#9](https://github.com/craftcms/gatsby-helper/issues/9))
+
+### Changed
+- When registering available source node types, the type array should be keyed by the type’s interface name.
+
 ## 1.0.0 - 2020-03-16
 
 ### Added
