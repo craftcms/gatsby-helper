@@ -43,7 +43,7 @@ class Builds extends Component
      */
     public function triggerBuild()
     {
-        $buildWebhookUrl = Plugin::getInstance()->getSettings()->buildWebhookUrl;
+        $buildWebhookUrl = Craft::parseEnv(Plugin::getInstance()->getSettings()->buildWebhookUrl);
 
         if (!empty($buildWebhookUrl) && $this->_buildQueued === false) {
             $this->_buildQueued = true;
