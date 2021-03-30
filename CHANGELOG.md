@@ -7,6 +7,7 @@
 
 ### Changed
 - When registering available source node types, the type array should be keyed by the type’s interface name.
+- The “Build Webhook URL” setting now can be set to an Environment variable. ([#10](https://github.com/craftcms/gatsby-helper/pull/10))
 
 ## 1.0.0 - 2020-03-16
 
