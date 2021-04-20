@@ -113,10 +113,10 @@ class Deltas extends Component
     public function getDeletedNodesSinceTimeStamp(string $timestamp): array
     {
         return (new Query())
-            ->select(['elementId', 'typeName'])
+            ->select(['elementId', 'siteId', 'typeName'])
             ->from([Table::DELETED_ELEMENTS])
             ->where(['>', 'dateDeleted', Db::prepareDateForDb($timestamp)])
-            ->pairs();
+            ->all();
     }
 
     /**
@@ -134,11 +134,14 @@ class Deltas extends Component
         // In case this is being deleted _again_
         Db::delete(Table::DELETED_ELEMENTS, ['elementId' => $element->id]);
 
-        return (bool)Db::insert(Table::DELETED_ELEMENTS, [
-            'elementId' => $element->id,
-            'typeName' => $element->getGqlTypeName(),
-            'dateDeleted' => Db::prepareDateForDb(new DateTime())
-        ], false);
+        $sites = Craft::$app->getSites()->getAllSiteIds(true);
+
+        $rows = [];
+        foreach ($sites as $site) {
+            $rows[] = [$element->id, $site, $element->getGqlTypeName(), Db::prepareDateForDb(new DateTime())];
+        }
+
+        return (bool)Db::batchInsert(Table::DELETED_ELEMENTS, ['elementId', 'siteId', 'typeName', 'dateDeleted'], $rows, false);
     }
 
     /**

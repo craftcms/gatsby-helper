@@ -4,6 +4,7 @@
 
 ### Fixed
 - Fixed a bug where sometimes the helper plugin could cause Gatsby incremental content sourcing to fail. ([#9](https://github.com/craftcms/gatsby-helper/issues/9))
+- Fixed another bug where sometimes the helper plugin could cause Gatsby incremental content sourcing to fail. ([#13](https://github.com/craftcms/gatsby-helper/issues/13))
 
 ### Changed
 - When registering available source node types, the type array should be keyed by the type’s interface name.
