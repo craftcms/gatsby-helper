@@ -27,7 +27,7 @@ class DeletedNode extends Resolver
 
         foreach ($deletedNodes as $element) {
             $resolved[] = [
-                'nodeId' => $element['id'],
+                'nodeId' => $element['elementId'],
                 'siteId' => $element['siteId'],
                 'nodeType' => $element['typeName']
             ];

@@ -10,6 +10,7 @@
 
 namespace craft\gatsbyhelper\services;
 
+use Craft;
 use craft\base\Component;
 use craft\base\Element;
 use craft\db\Query;
