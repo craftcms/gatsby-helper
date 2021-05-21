@@ -10,23 +10,19 @@
 
 namespace craft\gatsbyhelper\services;
 
-use Craft as Craft;
+use Craft;
 use craft\base\Component;
 use craft\base\Element;
 use craft\db\Query;
-use craft\db\Table as CraftTable;
 use craft\elements\MatrixBlock;
-use craft\gatsbyhelper\db\Table;
-use craft\gatsbyhelper\events\RegisterIgnoredTypesEvent;
 use craft\gatsbyhelper\Plugin;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\Db;
-use DateTime;
 use yii\base\Application;
 use yii\db\Expression;
 
 /**
- * Deltas Service
+ * Builds Service
  *
  * @author    Pixel & Tonic, Inc. <support@pixelandtonic.com>
  * @since 1.0.0
