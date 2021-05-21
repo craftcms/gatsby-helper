@@ -43,7 +43,7 @@ class SourceNodes extends Component
      * use yii\base\Event;
      *
      * Event::on(SourceNodes::class, SourceNodes::EVENT_REGISTER_SOURCE_NODE_TYPES, function(RegisterSourceNodeTypesEvent $event) {
-     *     $event->types[] = [
+     *     $event->types[BookInterface::getName()] = [
      *         'node' => 'book',
      *         'list' => 'books',
      *         'filterArgument' => 'type',
