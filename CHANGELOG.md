@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.0.2 - 2020-05-21
 
 ### Fixed
 - Fixed a bug that could lead to a Gatsby content sourcing failure. ([#13](https://github.com/craftcms/gatsby-helper/issues/13))
