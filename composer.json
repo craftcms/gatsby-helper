@@ -2,7 +2,7 @@
     "name": "craftcms/gatsby-helper",
     "description": "Plugin for enabling support for the Gatsby Craft CMS source plugin.",
     "type": "craft-plugin",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "keywords": [
         "craft",
         "cms",

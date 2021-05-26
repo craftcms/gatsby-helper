@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.0.3 - 2021-05-26
 
 ### Fixed
 - Fix a bug where it was impossible to update to 1.02 on installations that used PostgreSQL.
