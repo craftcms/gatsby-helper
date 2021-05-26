@@ -24,16 +24,18 @@ class m210419_173000_deletedElementSiteId extends Migration
         // Get the current deleted elements
         $deletedElements = (new Query())->select(['elementId', 'typeName', 'dateDeleted'])->from([Table::DELETED_ELEMENTS])->all();
 
-        // Get rid of the Primary Key
-        $this->alterColumn(Table::DELETED_ELEMENTS, 'elementId', $this->integer());
-        $this->dropPrimaryKey('elementId', Table::DELETED_ELEMENTS);
+        // Drop the table to avoid tinkering with the primary key.
+        $this->dropTable(Table::DELETED_ELEMENTS);
 
-        // Drop the entries
-        $this->truncateTable(Table::DELETED_ELEMENTS);
+        // Re-create the table
+        $this->createTable(Table::DELETED_ELEMENTS, [
+            'id' => $this->primaryKey(),
+            'elementId' => $this->integer(),
+            'siteId' => $this->integer()->notNull(),
+            'typeName' => $this->string()->notNull(),
+            'dateDeleted' => $this->dateTime()->notNull(),
+        ]);
 
-        // Add new columns and index
-        $this->addColumn(Table::DELETED_ELEMENTS, 'id', $this->primaryKey()->first());
-        $this->addColumn(Table::DELETED_ELEMENTS, 'siteId', $this->integer()->notNull()->after('elementId'));
         $this->createIndex(null, Table::DELETED_ELEMENTS, ['elementId', 'siteId'], true);
 
         // Re-add all the entries, but for each site.
