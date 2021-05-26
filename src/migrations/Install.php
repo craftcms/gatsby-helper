@@ -27,10 +27,14 @@ class Install extends Migration
     public function safeUp()
     {
         $this->createTable(Table::DELETED_ELEMENTS, [
-            'elementId' => $this->primaryKey(),
+            'id' => $this->primaryKey(),
+            'elementId' => $this->integer(),
+            'siteId' => $this->integer()->notNull(),
             'typeName' => $this->string()->notNull(),
             'dateDeleted' => $this->dateTime()->notNull(),
         ]);
+
+        $this->createIndex(null, Table::DELETED_ELEMENTS, ['elementId', 'siteId'], true);
 
         return true;
     }

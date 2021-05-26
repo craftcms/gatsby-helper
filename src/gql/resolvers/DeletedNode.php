@@ -7,6 +7,7 @@
 
 namespace craft\gatsbyhelper\gql\resolvers;
 
+use craft\base\Element;
 use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -24,10 +25,11 @@ class DeletedNode extends Resolver
         $deletedNodes = Plugin::getInstance()->getDeltas()->getDeletedNodesSinceTimeStamp($arguments['since']);
         $resolved = [];
 
-        foreach ($deletedNodes as $elementId => $elementType) {
+        foreach ($deletedNodes as $element) {
             $resolved[] = [
-                'nodeId' => $elementId,
-                'nodeType' => $elementType
+                'nodeId' => $element['elementId'],
+                'siteId' => $element['siteId'],
+                'nodeType' => $element['typeName']
             ];
         }
 
