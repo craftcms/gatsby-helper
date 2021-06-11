@@ -17,8 +17,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Pixel & Tonic, Inc. <support@pixelandtonic.com>",
-            "homepage": "https://craftcms.com/"
+            "name": "Pixel & Tonic",
+            "homepage": "https://pixelandtonic.com/"
         }
     ],
     "require": {
