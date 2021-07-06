@@ -21,8 +21,11 @@ use craft\gatsbyhelper\models\Settings;
 use craft\gatsbyhelper\services\Builds;
 use craft\gatsbyhelper\services\Deltas;
 use craft\gatsbyhelper\services\SourceNodes;
+use craft\helpers\ElementHelper;
 use craft\helpers\StringHelper;
 use craft\services\Gql;
+use GraphQL\Type\Definition\Type;
+use yii\base\BaseObject;
 use yii\base\Event;
 
 /**
@@ -119,6 +122,7 @@ class Plugin extends \craft\base\Plugin
                 SourcingDataQueries::getQueries()
             );
         });
+
     }
 
     /**
@@ -145,11 +149,28 @@ class Plugin extends \craft\base\Plugin
             $element = $event->sender;
 
             $this->getDeltas()->registerDeletedElement($element);
+
+            /** @var Element $element */
+            $element = $event->sender;
+            $rootElement = ElementHelper::rootElement($element);
+
+            // If the element or it's root element is a draft, don't trigger a build.
+            if ($rootElement->getIsDraft() || $rootElement->getIsRevision()) {
+                return;
+            }
+
+            $this->getBuilds()->triggerBuild();
         });
 
         Event::on(Element::class, Element::EVENT_AFTER_SAVE, function(Event $event) {
             /** @var Element $element */
             $element = $event->sender;
+            $rootElement = ElementHelper::rootElement($element);
+
+            // If the element or it's root element is a draft, don't trigger a build.
+            if ($rootElement->getIsDraft() || $rootElement->getIsRevision()) {
+                return;
+            }
 
             $this->getBuilds()->triggerBuild();
         });
@@ -175,6 +196,10 @@ class Plugin extends \craft\base\Plugin
                         let currentlyPreviewing;
                         
                         const alertGatsby = async function (event, doPreview) {
+                            if (!window.draftEditor.settings.draftId) {
+                                return;
+                            }
+                                
                             const url = doPreview ? event.previewTarget.url : '$previewWebhookUrl';
                             const compareUrl = new URL(url);
                                                         
