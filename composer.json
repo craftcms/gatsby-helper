@@ -2,7 +2,7 @@
     "name": "craftcms/gatsby-helper",
     "description": "Plugin for enabling support for the Gatsby Craft CMS source plugin.",
     "type": "craft-plugin",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "keywords": [
         "craft",
         "cms",
@@ -17,8 +17,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Pixel & Tonic, Inc. <support@pixelandtonic.com>",
-            "homepage": "https://craftcms.com/"
+            "name": "Pixel & Tonic",
+            "homepage": "https://pixelandtonic.com/"
         }
     ],
     "require": {
