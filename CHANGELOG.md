@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.0.4 - 2021-07-06
 
 ### Fixed
 - Fixed various issues where plugin was overly eager to trigger Gatsby site and preview builds. ([#14](https://github.com/craftcms/gatsby-helper/issues/14))
