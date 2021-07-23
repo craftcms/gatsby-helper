@@ -12,7 +12,6 @@ use craft\helpers\StringHelper;
  */
 class m201116_123000_settingname extends Migration
 {
-
     /**
      * @inheritdoc
      */
