@@ -55,9 +55,6 @@ class SourceNodes extends Component
      */
     const EVENT_REGISTER_SOURCE_NODE_TYPES = 'registerSourceNodeTypes';
 
-    // Public Methods
-    // =========================================================================
-
     /**
      * Return the query filters to use for querying source data with Gatsby
      *

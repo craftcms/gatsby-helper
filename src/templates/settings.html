@@ -1,20 +1,20 @@
 {% import '_includes/forms' as forms %}
 
 {{ forms.autosuggestField({
-    first: true,
-    label: 'Preview Webhook URL'|t('gatsby-helper'),
-    instructions: 'The Gatsby webhook URL that should be called when content changes in Live Preview.'|t('gatsby-helper'),
-    name: 'previewWebhookUrl',
-    value: settings.previewWebhookUrl,
-    suggestEnvVars: true,
-    suggestAliases: true,
+  first: true,
+  label: 'Preview Webhook URL'|t('gatsby-helper'),
+  instructions: 'The Gatsby webhook URL that should be called when content changes in Live Preview.'|t('gatsby-helper'),
+  name: 'previewWebhookUrl',
+  value: settings.previewWebhookUrl,
+  suggestEnvVars: true,
+  suggestAliases: true,
 }) }}
 
 {{ forms.autosuggestField({
-    label: 'Build Webhook URL'|t('gatsby-helper'),
-    instructions: 'The Gatsby webhook URL that should be called when an element is saved.'|t('gatsby-helper'),
-    name: 'buildWebhookUrl',
-    value: settings.buildWebhookUrl,
-    suggestEnvVars: true,
-    suggestAliases: true,
+  label: 'Build Webhook URL'|t('gatsby-helper'),
+  instructions: 'The Gatsby webhook URL that should be called when an element is saved.'|t('gatsby-helper'),
+  name: 'buildWebhookUrl',
+  value: settings.buildWebhookUrl,
+  suggestEnvVars: true,
+  suggestAliases: true,
 }) }}

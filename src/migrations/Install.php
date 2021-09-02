@@ -18,9 +18,6 @@ use craft\gatsbyhelper\db\Table;
  */
 class Install extends Migration
 {
-    // Public Methods
-    // =========================================================================
-
     /**
      * @inheritdoc
      */

@@ -1,5 +1,10 @@
 # Release Notes for Gatsby Helper
 
+## 1.0.5 - 2021-09-02
+
+### Fixed
+- Fixed a bug where preview builds would not be triggered for entries that had no drafts.
+
 ## 1.0.4 - 2021-07-06
 
 ### Fixed

@@ -15,7 +15,6 @@ use craft\helpers\StringHelper;
  */
 class m210419_173000_deletedElementSiteId extends Migration
 {
-
     /**
      * @inheritdoc
      */

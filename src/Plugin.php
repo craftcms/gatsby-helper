@@ -115,14 +115,17 @@ class Plugin extends \craft\base\Plugin
      */
     private function _registerGqlQueries()
     {
-        Event::on(Gql::class, Gql::EVENT_REGISTER_GQL_QUERIES, function(RegisterGqlQueriesEvent $event) {
-            // Add my GraphQL queries
-            $event->queries = array_merge(
-                $event->queries,
-                SourcingDataQueries::getQueries()
-            );
-        });
-
+        Event::on(
+            Gql::class,
+            Gql::EVENT_REGISTER_GQL_QUERIES,
+            function(RegisterGqlQueriesEvent $event) {
+                // Add my GraphQL queries
+                $event->queries = array_merge(
+                    $event->queries,
+                    SourcingDataQueries::getQueries()
+                );
+            }
+        );
     }
 
     /**
@@ -130,13 +133,17 @@ class Plugin extends \craft\base\Plugin
      */
     private function _registerGqlComponents()
     {
-        Event::on(Gql::class, Gql::EVENT_REGISTER_GQL_SCHEMA_COMPONENTS, function(RegisterGqlSchemaComponentsEvent $event) {
-            $label = 'Gatsby';
+        Event::on(
+            Gql::class,
+            Gql::EVENT_REGISTER_GQL_SCHEMA_COMPONENTS,
+            function(RegisterGqlSchemaComponentsEvent $event) {
+                $label = 'Gatsby';
 
-            $event->queries[$label] = [
-                'gatsby:read' => ['label' => 'Allow discovery of sourcing data for Gatsby.']
-            ];
-        });
+                $event->queries[$label] = [
+                    'gatsby:read' => ['label' => 'Allow discovery of sourcing data for Gatsby.']
+                ];
+            }
+        );
     }
 
     /**
@@ -144,36 +151,44 @@ class Plugin extends \craft\base\Plugin
      */
     private function _registerElementListeners()
     {
-        Event::on(Element::class, Element::EVENT_AFTER_DELETE, function(Event $event) {
-            /** @var Element $element */
-            $element = $event->sender;
+        Event::on(
+            Element::class,
+            Element::EVENT_AFTER_DELETE,
+            function(Event $event) {
+                /** @var Element $element */
+                $element = $event->sender;
 
-            $this->getDeltas()->registerDeletedElement($element);
+                $this->getDeltas()->registerDeletedElement($element);
 
-            /** @var Element $element */
-            $element = $event->sender;
-            $rootElement = ElementHelper::rootElement($element);
+                /** @var Element $element */
+                $element = $event->sender;
+                $rootElement = ElementHelper::rootElement($element);
 
-            // If the element or it's root element is a draft, don't trigger a build.
-            if ($rootElement->getIsDraft() || $rootElement->getIsRevision()) {
-                return;
+                // If the element or it's root element is a draft, don't trigger a build.
+                if ($rootElement->getIsDraft() || $rootElement->getIsRevision()) {
+                    return;
+                }
+
+                $this->getBuilds()->triggerBuild();
             }
+        );
 
-            $this->getBuilds()->triggerBuild();
-        });
+        Event::on(
+            Element::class,
+            Element::EVENT_AFTER_SAVE,
+            function(Event $event) {
+                /** @var Element $element */
+                $element = $event->sender;
+                $rootElement = ElementHelper::rootElement($element);
 
-        Event::on(Element::class, Element::EVENT_AFTER_SAVE, function(Event $event) {
-            /** @var Element $element */
-            $element = $event->sender;
-            $rootElement = ElementHelper::rootElement($element);
+                // If the element or it's root element is a draft, don't trigger a build.
+                if ($rootElement->getIsDraft() || $rootElement->getIsRevision()) {
+                    return;
+                }
 
-            // If the element or it's root element is a draft, don't trigger a build.
-            if ($rootElement->getIsDraft() || $rootElement->getIsRevision()) {
-                return;
+                $this->getBuilds()->triggerBuild();
             }
-
-            $this->getBuilds()->triggerBuild();
-        });
+        );
     }
 
     /**
@@ -184,70 +199,65 @@ class Plugin extends \craft\base\Plugin
         $previewWebhookUrl = Craft::parseEnv($this->getSettings()->previewWebhookUrl);
 
         if (!empty($previewWebhookUrl)) {
-            Event::on(Entry::class, Entry::EVENT_REGISTER_PREVIEW_TARGETS, function(RegisterPreviewTargetsEvent $event) use ($previewWebhookUrl) {
-                /** @var Element $element */
-                $element = $event->sender;
+            Event::on(
+                Entry::class,
+                Entry::EVENT_REGISTER_PREVIEW_TARGETS,
+                function(RegisterPreviewTargetsEvent $event) use ($previewWebhookUrl) {
+                    /** @var Element $element */
+                    $element = $event->sender;
 
-                $gqlTypeName = $element->getGqlTypeName();
-                $elementId = $element->getSourceId();
+                    $gqlTypeName = $element->getGqlTypeName();
+                    $elementId = $element->getSourceId();
 
-                $js = <<<JS
-                    {
-                        let currentlyPreviewing;
-                        
-                        const alertGatsby = async function (event, doPreview) {
-                            if (!window.draftEditor.settings.draftId) {
-                                return;
-                            }
+                    $js = <<<JS
+                        {
+                            let currentlyPreviewing;
+
+                            const alertGatsby = async function (event, doPreview) {
+                                const url = doPreview ? event.previewTarget.url : '$previewWebhookUrl';
+                                const compareUrl = new URL(url);
+
+                                if (doPreview) {
+                                    currentlyPreviewing = $elementId;
+                                }
+
+                                if (!currentlyPreviewing) {
+                                    return;
+                                }
+
+                                const http = new XMLHttpRequest();
+
+                                const payload = {
+                                    operation: 'update',
+                                    typeName: '$gqlTypeName',
+                                    id: currentlyPreviewing,
+                                    siteId: {$element->siteId}
+                                };
                                 
-                            const url = doPreview ? event.previewTarget.url : '$previewWebhookUrl';
-                            const compareUrl = new URL(url);
-                                                        
-                            if (doPreview) {
-                                currentlyPreviewing = $elementId;
-                            }
-                            
-                            if (!currentlyPreviewing) {
-                                return;
-                            }
+                                if (doPreview) {
+                                    payload.token = await event.target.draftEditor.getPreviewToken();
+                                } else {
+                                    currentlyPreviewing = null;
+                                }
                                 
-                            if (!currentlyPreviewing) {
-                                return;
+                                http.open('POST', "$previewWebhookUrl", true);
+                                http.setRequestHeader('Content-type', 'application/json');
+                                http.setRequestHeader('x-preview-update-source', 'Craft CMS');
+                                http.send(JSON.stringify(payload));
                             }
+
+                            Garnish.on(Craft.Preview, 'beforeUpdateIframe', function(event) {
+                                alertGatsby(event, true);
+                            });
                             
-                            const http = new XMLHttpRequest();
-                            
-                            const payload = {
-                                operation: 'update',
-                                typeName: '$gqlTypeName',
-                                id: currentlyPreviewing,
-                                siteId: {$element->siteId}
-                            };
-                             
-                            if (doPreview) {
-                                payload.token = await event.target.draftEditor.getPreviewToken();
-                            } else {
-                                currentlyPreviewing = null;
-                            }
-                            
-                            http.open('POST', "$previewWebhookUrl", true);
-                            http.setRequestHeader('Content-type', 'application/json');
-                            http.setRequestHeader('x-preview-update-source', 'Craft CMS');
-                            http.send(JSON.stringify(payload));        
+                            Garnish.on(Craft.Preview, 'beforeClose', function(event) {
+                                alertGatsby(event, false);
+                            });
+
+                            Garnish.\$win.on('beforeunload', function(event) {
+                                alertGatsby(event, false);
+                            });
                         }
-                        
-                        Garnish.on(Craft.Preview, 'beforeUpdateIframe', function(event) {
-                            alertGatsby(event, true);                        
-                        });
-                        
-                        Garnish.on(Craft.Preview, 'beforeClose', function(event) {
-                            alertGatsby(event, false);                        
-                        });
-                                   
-                        Garnish.\$win.on('beforeunload', function(event) {
-                            alertGatsby(event, false);                        
-                        });           
-                    }          
 JS;
 
                 Craft::$app->view->registerJs($js);
