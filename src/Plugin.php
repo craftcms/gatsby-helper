@@ -214,19 +214,11 @@ class Plugin extends \craft\base\Plugin
                             let currentlyPreviewing;
 
                             const alertGatsby = async function (event, doPreview) {
-                                if (!window.draftEditor.settings.draftId) {
-                                    return;
-                                }
-
                                 const url = doPreview ? event.previewTarget.url : '$previewWebhookUrl';
                                 const compareUrl = new URL(url);
 
                                 if (doPreview) {
                                     currentlyPreviewing = $elementId;
-                                }
-
-                                if (!currentlyPreviewing) {
-                                    return;
                                 }
 
                                 if (!currentlyPreviewing) {
