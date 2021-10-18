@@ -25,7 +25,11 @@ class UpdatedNode extends Resolver
 {
     public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo)
     {
-        $updatedNodes = Plugin::getInstance()->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since']);
+        if (empty($arguments['site'])) {
+            $arguments['site'] = [Craft::$app->getSites()->getPrimarySite()->handle];
+        }
+
+        $updatedNodes = Plugin::getInstance()->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since'], $arguments['site']);
         $resolved = [];
         $allowedInterfaces = array_keys(Plugin::getInstance()->getSourceNodes()->getSourceNodeTypes());
         $schema = Craft::$app->getGql()->getSchemaDef();

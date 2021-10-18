@@ -1,5 +1,13 @@
 # Release Notes for Gatsby Helper
 
+## 1.0.6 - 2021-10-18
+
+### Changed
+- The `nodesUpdatedSince` query now also accepts `site` argument that specifies sites to query for updated elements.
+
+### Fixed
+- Fixed a bug where it would be impossible to query for updated element in a disabled site. ([craftcms/gatsby-source-craft#50](https://github.com/craftcms/gatsby-source-craft/issues/50))
+
 ## 1.0.5 - 2021-09-02
 
 ### Fixed

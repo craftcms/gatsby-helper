@@ -90,18 +90,22 @@ class Deltas extends Component
      * Get updated nodes since a specific timestamp.
      *
      * @param string $timestamp
+     * @param string[] $sites
      * @return array
      */
-    public function getUpdatedNodesSinceTimeStamp(string $timestamp): array
+    public function getUpdatedNodesSinceTimeStamp(string $timestamp, array $sites): array
     {
+       $siteIds =  $this->getSiteIdsByHandles($sites);
+
         return (new Query())
-            ->select(['id', 'type'])
-            ->from([CraftTable::ELEMENTS])
-            ->where(['dateDeleted' => null])
-            ->andWhere(['not in', 'type', $this->_getIgnoredTypes()])
-            ->andWhere(['>', 'dateUpdated', Db::prepareDateForDb($timestamp)])
-            ->andWhere(['revisionId' => null])
-            ->andWhere(['draftId' => null])
+            ->select(['e.id', 'e.type'])
+            ->from(['e' => CraftTable::ELEMENTS])
+            ->innerJoin(['es' => CraftTable::ELEMENTS_SITES], ['and', '[[e.id]] = [[es.elementId]]', ['es.siteId' => $siteIds]])
+            ->where(['e.dateDeleted' => null])
+            ->andWhere(['not in', 'e.type', $this->_getIgnoredTypes()])
+            ->andWhere(['>', 'e.dateUpdated', Db::prepareDateForDb($timestamp)])
+            ->andWhere(['e.revisionId' => null])
+            ->andWhere(['e.draftId' => null])
             ->pairs();
     }
 
@@ -161,5 +165,23 @@ class Deltas extends Component
         $this->trigger(self::EVENT_REGISTER_IGNORED_TYPES, $event);
 
         return $event->types;
+    }
+
+    /**
+     * Return a list of enabled site Ids by a list of site handles.
+     *
+     * @param array $sites
+     */
+    protected function getSiteIdsByHandles(array $sites): array
+    {
+        $siteIds = [];
+        foreach ($sites as $handle) {
+            $siteId = Craft::$app->getSites()->getSiteByHandle($handle, false);
+            if ($siteId) {
+                $siteIds[] = $siteId;
+            }
+        }
+
+        return $siteIds;
     }
 }
