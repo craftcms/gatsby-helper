@@ -67,7 +67,12 @@ class Sourcing extends Query
                     'since' => [
                         'name' => 'since',
                         'type' => Type::nonNull(Type::string())
-                    ]
+                    ],
+                    'site' => [
+                        'name' => 'site',
+                        'type' => Type::listOf(Type::string()),
+                        'description' => 'Determines which site(s) the elements should be queried in. Defaults to the current (requested) site.',
+                    ],
                 ],
                 'resolve' => UpdatedNodeResolver::class . '::resolve',
                 'description' => 'Return the list of nodes updated since a point in time.'
@@ -78,7 +83,7 @@ class Sourcing extends Query
                     'since' => [
                         'name' => 'since',
                         'type' => Type::nonNull(Type::string())
-                    ]
+                    ],
                 ],
                 'resolve' => DeletedNodeResolver::class . '::resolve',
                 'description' => 'Return the list of nodes deleted since a point in time.'
