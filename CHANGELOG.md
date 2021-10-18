@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.0.6 - 2021-10-18
 
 ### Changed
 - The `nodesUpdatedSince` query now also accepts `site` argument that specifies sites to query for updated elements.
