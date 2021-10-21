@@ -90,15 +90,13 @@ class Deltas extends Component
      * Get updated nodes since a specific timestamp.
      *
      * @param string $timestamp
-     * @param string[] $sites
+     * @param int[] $siteIds
      * @return array
      */
-    public function getUpdatedNodesSinceTimeStamp(string $timestamp, array $sites): array
+    public function getUpdatedNodesSinceTimeStamp(string $timestamp, array $siteIds): array
     {
-       $siteIds =  $this->getSiteIdsByHandles($sites);
-
         return (new Query())
-            ->select(['e.id', 'e.type'])
+            ->select(['e.id', 'e.type', 'es.siteId'])
             ->from(['e' => CraftTable::ELEMENTS])
             ->innerJoin(['es' => CraftTable::ELEMENTS_SITES], ['and', '[[e.id]] = [[es.elementId]]', ['es.siteId' => $siteIds]])
             ->where(['e.dateDeleted' => null])
@@ -106,7 +104,7 @@ class Deltas extends Component
             ->andWhere(['>', 'e.dateUpdated', Db::prepareDateForDb($timestamp)])
             ->andWhere(['e.revisionId' => null])
             ->andWhere(['e.draftId' => null])
-            ->pairs();
+            ->all();
     }
 
     /**
@@ -165,23 +163,5 @@ class Deltas extends Component
         $this->trigger(self::EVENT_REGISTER_IGNORED_TYPES, $event);
 
         return $event->types;
-    }
-
-    /**
-     * Return a list of enabled site Ids by a list of site handles.
-     *
-     * @param array $sites
-     */
-    protected function getSiteIdsByHandles(array $sites): array
-    {
-        $siteIds = [];
-        foreach ($sites as $handle) {
-            $siteId = Craft::$app->getSites()->getSiteByHandle($handle, false);
-            if ($siteId) {
-                $siteIds[] = $siteId;
-            }
-        }
-
-        return $siteIds;
     }
 }

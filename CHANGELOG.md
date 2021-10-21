@@ -1,5 +1,10 @@
 # Release Notes for Gatsby Helper
 
+## 1.0.7 - 2021-10-21
+
+### Fixed
+- Fixed a bug where Gatsby Helper plugin would return incorrect results for incremental sourcing queries. ([#16](https://github.com/craftcms/gatsby-helper/issues/16))
+
 ## 1.0.6 - 2021-10-18
 
 ### Changed
