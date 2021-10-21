@@ -29,13 +29,21 @@ class UpdatedNode extends Resolver
             $arguments['site'] = [Craft::$app->getSites()->getPrimarySite()->handle];
         }
 
-        $updatedNodes = Plugin::getInstance()->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since'], $arguments['site']);
+        $siteIds = [];
+        foreach ($arguments['site'] as $handle) {
+            $site = Craft::$app->getSites()->getSiteByHandle($handle, false);
+            if ($site) {
+                $siteIds[] = $site->id;
+            }
+        }
+
+        $updatedNodes = Plugin::getInstance()->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since'], $siteIds);
         $resolved = [];
         $allowedInterfaces = array_keys(Plugin::getInstance()->getSourceNodes()->getSourceNodeTypes());
         $schema = Craft::$app->getGql()->getSchemaDef();
 
-        foreach ($updatedNodes as $elementId => $elementType) {
-            $element = Craft::$app->getElements()->getElementById($elementId, $elementType);
+        foreach ($updatedNodes as $updatedNode) {
+            $element = Craft::$app->getElements()->getElementById($updatedNode['id'], $updatedNode['type']);
             $gqlType = $schema->getType($element->getGqlTypeName());
             $registeredInterfaces = $gqlType->getInterfaces();
 
@@ -47,15 +55,11 @@ class UpdatedNode extends Resolver
                 }
             }
 
-            if ($element && $gqlType) {
-                foreach (ElementHelper::supportedSitesForElement($element) as $site) {
-                    $resolved[] = [
-                        'nodeId' => $elementId,
-                        'nodeType' => $element->getGqlTypeName(),
-                        'siteId' => $site['siteId']
-                    ];
-                }
-            }
+            $resolved[] = [
+                'nodeId' => $updatedNode['id'],
+                'nodeType' => $element->getGqlTypeName(),
+                'siteId' => $updatedNode['siteId']
+            ];
         }
 
         return $resolved;
