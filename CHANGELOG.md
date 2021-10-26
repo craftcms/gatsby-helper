@@ -1,5 +1,10 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+
+### Fixed
+- Fixed a bug where moving structure elements around would not trigger a Gatsby incremental build correctly. ([craftcms/gatsby-source-craft/#48](https://github.com/craftcms/gatsby-source-craft/issues/48))
+
 ## 1.0.7 - 2021-10-21
 
 ### Fixed
