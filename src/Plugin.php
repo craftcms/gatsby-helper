@@ -207,7 +207,8 @@ class Plugin extends \craft\base\Plugin
                     $element = $event->sender;
 
                     $gqlTypeName = $element->getGqlTypeName();
-                    $elementId = $element->getSourceId();
+
+                    $elementId = method_exists($element, 'getCanonicalId') ? $element->getCanonicalId() : $element->getSourceId();
 
                     $js = <<<JS
                         {

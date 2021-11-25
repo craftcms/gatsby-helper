@@ -95,13 +95,24 @@ class Deltas extends Component
      */
     public function getUpdatedNodesSinceTimeStamp(string $timestamp, array $siteIds): array
     {
+        $structureUpdates = (new Query())
+            ->select(['elementId', 'structureId'])
+            ->from([CraftTable::STRUCTUREELEMENTS])
+            ->andWhere(['>', 'dateUpdated', Db::prepareDateForDb($timestamp)])
+            ->pairs();
+
         return (new Query())
             ->select(['e.id', 'e.type', 'es.siteId'])
             ->from(['e' => CraftTable::ELEMENTS])
             ->innerJoin(['es' => CraftTable::ELEMENTS_SITES], ['and', '[[e.id]] = [[es.elementId]]', ['es.siteId' => $siteIds]])
             ->where(['e.dateDeleted' => null])
             ->andWhere(['not in', 'e.type', $this->_getIgnoredTypes()])
-            ->andWhere(['>', 'e.dateUpdated', Db::prepareDateForDb($timestamp)])
+            ->andWhere(
+                ['or',
+                    ['>', 'dateUpdated', Db::prepareDateForDb($timestamp)],
+                    ['IN', 'id', array_keys($structureUpdates)]
+                ]
+            )
             ->andWhere(['e.revisionId' => null])
             ->andWhere(['e.draftId' => null])
             ->all();

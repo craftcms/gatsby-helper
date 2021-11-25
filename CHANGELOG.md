@@ -1,5 +1,11 @@
 # Release Notes for Gatsby Helper
 
+## 1.0.8 - 2021-11-25
+
+### Fixed
+- Fixed a bug where moving structure elements around would not trigger a Gatsby incremental build correctly. ([craftcms/gatsby-source-craft/#48](https://github.com/craftcms/gatsby-source-craft/issues/48))
+- Fixed a deprecation error. ([#17](https://github.com/craftcms/gatsby-helper/issues/17))
+
 ## 1.0.7 - 2021-10-21
 
 ### Fixed
