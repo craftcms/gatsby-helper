@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.0.9 - 2021-11-30
 
 ### Added
 - Add additional queries to funnel information to the sourcing plugin. ([craftcms/gatsby-source-craft#58](https://github.com/craftcms/gatsby-source-craft/issues/58))
