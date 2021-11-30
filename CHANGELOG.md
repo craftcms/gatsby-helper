@@ -1,5 +1,10 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+
+### Fixed
+- Fixed an error in the SQL query when fetching updated elements. Again. ([craftcms/gatsby-source-craft#57](https://github.com/craftcms/gatsby-source-craft/issues/57))
+
 ## 1.0.9 - 2021-11-30
 
 ### Added

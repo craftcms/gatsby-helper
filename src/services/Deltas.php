@@ -110,7 +110,7 @@ class Deltas extends Component
             ->andWhere(
                 ['or',
                     ['>', 'e.dateUpdated', Db::prepareDateForDb($timestamp)],
-                    ['IN', 'id', array_keys($structureUpdates)]
+                    ['IN', 'e.id', array_keys($structureUpdates)]
                 ]
             )
             ->andWhere(['e.revisionId' => null])
