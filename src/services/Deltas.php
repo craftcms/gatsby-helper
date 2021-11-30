@@ -109,7 +109,7 @@ class Deltas extends Component
             ->andWhere(['not in', 'e.type', $this->_getIgnoredTypes()])
             ->andWhere(
                 ['or',
-                    ['>', 'dateUpdated', Db::prepareDateForDb($timestamp)],
+                    ['>', 'e.dateUpdated', Db::prepareDateForDb($timestamp)],
                     ['IN', 'id', array_keys($structureUpdates)]
                 ]
             )
