@@ -1,9 +1,15 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.0.9 - 2021-11-30
+
+### Added
+- Add additional queries to funnel information to the sourcing plugin. ([craftcms/gatsby-source-craft#58](https://github.com/craftcms/gatsby-source-craft/issues/58))
+
+### Changed
+- Exposed interface names are now correctly prefixed. ([craftcms/gatsby-source-craft#58](https://github.com/craftcms/gatsby-source-craft/issues/58))
 
 ### Fixed
-- Fixed an error in the SQL query when fetching updated elements. ([#57](https://github.com/craftcms/gatsby-source-craft/issues/57))
+- Fixed an error in the SQL query when fetching updated elements. ([craftcms/gatsby-source-craft#57](https://github.com/craftcms/gatsby-source-craft/issues/57))
 
 ## 1.0.8 - 2021-11-25
 

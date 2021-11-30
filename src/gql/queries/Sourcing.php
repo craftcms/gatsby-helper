@@ -88,6 +88,21 @@ class Sourcing extends Query
                 'resolve' => DeletedNodeResolver::class . '::resolve',
                 'description' => 'Return the list of nodes deleted since a point in time.'
             ],
+            'gatsbyHelperVersion' => [
+                'type' => Type::string(),
+                'resolve' => function () {
+                    return Plugin::getInstance()->version;
+                },
+                'description' => 'Return the verison of the currently installed Helper plugin version.'
+            ],
+            'gqlTypePrefix' => [
+                'name' => 'gqlTypePrefix',
+                'type' => Type::string(),
+                'resolve' => function () {
+                    return Craft::$app->getConfig()->getGeneral()->gqlTypePrefix;
+                },
+                'description' => 'Return the value of the `gqlTypePrefix` config setting.'
+            ]
         ];
     }
 }
