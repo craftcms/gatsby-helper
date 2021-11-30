@@ -12,6 +12,7 @@ namespace craft\gatsbyhelper\services;
 
 use craft\base\Component;
 use craft\gatsbyhelper\events\RegisterSourceNodeTypesEvent;
+use craft\gql\GqlEntityRegistry;
 use craft\gql\interfaces\elements\Asset as AssetInterface;
 use craft\gql\interfaces\elements\Category as CategoryInterface;
 use craft\gql\interfaces\elements\Entry as EntryInterface;
@@ -19,6 +20,7 @@ use craft\gql\interfaces\elements\GlobalSet as GlobalSetInterface;
 use craft\gql\interfaces\elements\Tag as TagInterface;
 use craft\gql\interfaces\elements\User as UserInterface;
 use craft\helpers\Gql;
+use craft\helpers\StringHelper;
 
 /**
  * SourceNodes Service
@@ -129,6 +131,10 @@ class SourceNodes extends Component
         ]);
 
         $this->trigger(self::EVENT_REGISTER_SOURCE_NODE_TYPES, $event);
+
+        foreach ($event->types as &$sourceNodeType) {
+            $sourceNodeType['targetInterface'] = GqlEntityRegistry::prefixTypeName($sourceNodeType['targetInterface']);
+        }
 
         return $event->types;
     }
