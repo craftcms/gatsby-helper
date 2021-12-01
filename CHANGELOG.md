@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.1.0 - 2021-12-01
 
 ### Changed
 - Added the `craftVersion` GraphQL query that returns more data points for the sourcing plugin to use when construct its queries.
