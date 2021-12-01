@@ -12,11 +12,14 @@ use craft\gatsbyhelper\gql\resolvers\DeletedNode as DeletedNodeResolver;
 use craft\gatsbyhelper\gql\resolvers\SourceNode as SourceNodeResolver;
 use craft\gatsbyhelper\gql\resolvers\UpdatedNode as UpdatedNodeResolver;
 use craft\gatsbyhelper\gql\types\ChangedNode;
+use craft\gatsbyhelper\gql\types\GatsbyMeta;
 use craft\gatsbyhelper\gql\types\SourceNode;
 use craft\gatsbyhelper\helpers\Gql as GqlHelper;
 use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Query;
 use craft\gql\types\DateTime;
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
 /**
@@ -102,6 +105,14 @@ class Sourcing extends Query
                     return Craft::$app->getConfig()->getGeneral()->gqlTypePrefix;
                 },
                 'description' => 'Return the value of the `gqlTypePrefix` config setting.'
+            ],
+            'craftVersion' => [
+                'name' => 'craftVersion',
+                'type' => Type::string(),
+                'description' => 'Return the value of the `gqlTypePrefix` config setting.',
+                'resolve' => function () {
+                     return Craft::$app->version;
+                },
             ]
         ];
     }
