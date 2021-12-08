@@ -57,6 +57,11 @@ class ChangedNode extends ObjectType
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'Node type.'
             ],
+            'elementType' => [
+                'name' => 'elementType',
+                'type' => Type::nonNull(Type::string()),
+                'description' => 'Element type.'
+            ],
             'nodeId' => [
                 'name' => 'nodeId',
                 'type' => Type::nonNull(Type::id()),
