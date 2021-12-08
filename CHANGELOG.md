@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.1.1 - 2021-12-08
 
 ### Added
 - Added the `elementType` field to the `UpdatedNode` GraphQL type.
