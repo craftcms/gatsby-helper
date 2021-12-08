@@ -11,6 +11,7 @@ namespace craft\gatsbyhelper\gql\resolvers;
 use Craft;
 use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
+use craft\gql\GqlEntityRegistry;
 use craft\gql\interfaces\Element as ElementInterface;
 use craft\helpers\ElementHelper;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -40,17 +41,22 @@ class UpdatedNode extends Resolver
         $updatedNodes = Plugin::getInstance()->getDeltas()->getUpdatedNodesSinceTimeStamp($arguments['since'], $siteIds);
         $resolved = [];
         $allowedInterfaces = array_keys(Plugin::getInstance()->getSourceNodes()->getSourceNodeTypes());
+
+        foreach ($allowedInterfaces as &$allowedInterface) {
+            $allowedInterface = GqlEntityRegistry::prefixTypeName($allowedInterface);
+        }
+
         $schema = Craft::$app->getGql()->getSchemaDef();
 
         foreach ($updatedNodes as $updatedNode) {
             $element = Craft::$app->getElements()->getElementById($updatedNode['id'], $updatedNode['type']);
-            $gqlType = $schema->getType($element->getGqlTypeName());
+            $gqlType = $schema->getType(GqlEntityRegistry::prefixTypeName($element->getGqlTypeName()));
             $registeredInterfaces = $gqlType->getInterfaces();
 
             foreach ($registeredInterfaces as $registeredInterface) {
                 $interfaceName = $registeredInterface->name;
                 // Make sure Gatsby can handle updates to these elements.
-                if ($interfaceName !== ElementInterface::getName() && !in_array($interfaceName, $allowedInterfaces, true)) {
+                if ($interfaceName !== GqlEntityRegistry::prefixTypeName(ElementInterface::getName()) && !in_array($interfaceName, $allowedInterfaces, true)) {
                     continue 2;
                 }
             }
@@ -58,7 +64,8 @@ class UpdatedNode extends Resolver
             $resolved[] = [
                 'nodeId' => $updatedNode['id'],
                 'nodeType' => $element->getGqlTypeName(),
-                'siteId' => $updatedNode['siteId']
+                'siteId' => $updatedNode['siteId'],
+                'elementType' => get_class($element)
             ];
         }
 
