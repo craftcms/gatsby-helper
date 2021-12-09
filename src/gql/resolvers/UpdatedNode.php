@@ -50,11 +50,18 @@ class UpdatedNode extends Resolver
 
         foreach ($updatedNodes as $updatedNode) {
             $element = Craft::$app->getElements()->getElementById($updatedNode['id'], $updatedNode['type']);
+
+            // Don't care about elements that don't bother implementing GQL.
+            if ($element->getGqlTypeName() === 'Element') {
+                continue;
+            }
+
             $gqlType = $schema->getType(GqlEntityRegistry::prefixTypeName($element->getGqlTypeName()));
             $registeredInterfaces = $gqlType->getInterfaces();
 
             foreach ($registeredInterfaces as $registeredInterface) {
                 $interfaceName = $registeredInterface->name;
+
                 // Make sure Gatsby can handle updates to these elements.
                 if ($interfaceName !== GqlEntityRegistry::prefixTypeName(ElementInterface::getName()) && !in_array($interfaceName, $allowedInterfaces, true)) {
                     continue 2;
