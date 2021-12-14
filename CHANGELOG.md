@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## 1.1.2 - 2121-12-09
+## 1.1.2 - 2021-12-09
 
 ### Fixed
 - Fixed a bug where Gatsby incremental sourcing would break if elements were updated that had no real GraphQL support.
