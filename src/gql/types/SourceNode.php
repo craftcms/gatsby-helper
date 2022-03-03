@@ -7,9 +7,9 @@
 
 namespace craft\gatsbyhelper\gql\types;
 
+use Craft;
 use craft\gql\base\ObjectType;
 use craft\gql\GqlEntityRegistry;
-use craft\gql\TypeManager;
 use GraphQL\Type\Definition\Type;
 
 /**
@@ -21,7 +21,7 @@ use GraphQL\Type\Definition\Type;
 class SourceNode extends ObjectType
 {
     /**
-     * @return string|null
+     * @return string
      */
     public static function getName(): string
     {
@@ -51,7 +51,7 @@ class SourceNode extends ObjectType
      */
     public static function getFieldDefinitions(): array
     {
-        return TypeManager::prepareFieldDefinitions([
+        return Craft::$app->getGql()->prepareFieldDefinitions([
             'list' => [
                 'name' => 'list',
                 'type' => Type::nonNull(Type::string()),

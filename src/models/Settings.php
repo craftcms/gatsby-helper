@@ -16,17 +16,17 @@ class Settings extends Model
      * @var string
      * @deprecated
      */
-    public $previewServerUrl = '';
+    public string $previewServerUrl = '';
 
     /**
      * The full URL where the plugin should let Gatsby know to trigger preview
      * @var string
      */
-    public $previewWebhookUrl = '';
+    public string $previewWebhookUrl = '';
 
     /**
      * The full URL where the plugin should let Gatsby know to trigger a site build
      * @var string
      */
-    public $buildWebhookUrl = '';
+    public string $buildWebhookUrl = '';
 }

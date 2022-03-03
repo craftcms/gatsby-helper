@@ -12,14 +12,9 @@ namespace craft\gatsbyhelper\services;
 
 use Craft;
 use craft\base\Component;
-use craft\base\Element;
-use craft\db\Query;
-use craft\elements\MatrixBlock;
 use craft\gatsbyhelper\Plugin;
-use craft\helpers\DateTimeHelper;
-use craft\helpers\Db;
+use craft\helpers\App;
 use yii\base\Application;
-use yii\db\Expression;
 
 /**
  * Builds Service
@@ -32,14 +27,14 @@ use yii\db\Expression;
  */
 class Builds extends Component
 {
-    private $_buildQueued = false;
+    private bool $_buildQueued = false;
 
     /**
      * Trigger a Gatsby build.
      */
-    public function triggerBuild()
+    public function triggerBuild(): void
     {
-        $buildWebhookUrl = Craft::parseEnv(Plugin::getInstance()->getSettings()->buildWebhookUrl);
+        $buildWebhookUrl = App::parseEnv(Plugin::getInstance()->getSettings()->buildWebhookUrl);
 
         if (!empty($buildWebhookUrl) && $this->_buildQueued === false) {
             $this->_buildQueued = true;

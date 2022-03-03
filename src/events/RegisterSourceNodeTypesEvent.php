@@ -20,5 +20,5 @@ class RegisterSourceNodeTypesEvent extends Event
     /**
      * @var array Source node type list
      */
-    public $types = [];
+    public array $types = [];
 }

@@ -20,7 +20,6 @@ use craft\gql\interfaces\elements\GlobalSet as GlobalSetInterface;
 use craft\gql\interfaces\elements\Tag as TagInterface;
 use craft\gql\interfaces\elements\User as UserInterface;
 use craft\helpers\Gql;
-use craft\helpers\StringHelper;
 
 /**
  * SourceNodes Service
@@ -55,7 +54,7 @@ class SourceNodes extends Component
      * });
      * ```
      */
-    const EVENT_REGISTER_SOURCE_NODE_TYPES = 'registerSourceNodeTypes';
+    public const EVENT_REGISTER_SOURCE_NODE_TYPES = 'registerSourceNodeTypes';
 
     /**
      * Return the query filters to use for querying source data with Gatsby

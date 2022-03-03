@@ -20,7 +20,7 @@ use GraphQL\Type\Definition\ResolveInfo;
  */
 class DeletedNode extends Resolver
 {
-    public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo)
+    public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo): array
     {
         $deletedNodes = Plugin::getInstance()->getDeltas()->getDeletedNodesSinceTimeStamp($arguments['since']);
         $resolved = [];

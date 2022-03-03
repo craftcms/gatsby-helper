@@ -24,7 +24,7 @@ use GraphQL\Type\Definition\ResolveInfo;
  */
 class UpdatedNode extends Resolver
 {
-    public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo)
+    public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo): array
     {
         if (empty($arguments['site'])) {
             $arguments['site'] = [Craft::$app->getSites()->getPrimarySite()->handle];

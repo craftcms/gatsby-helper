@@ -19,7 +19,7 @@ use GraphQL\Type\Definition\ResolveInfo;
  */
 class SourceNode extends Resolver
 {
-    public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo)
+    public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo): array
     {
         return Plugin::getInstance()->getSourceNodes()->getSourceNodeTypes();
     }

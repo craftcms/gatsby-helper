@@ -13,5 +13,5 @@ namespace craft\gatsbyhelper\db;
  */
 abstract class Table
 {
-    const DELETED_ELEMENTS = '{{%gatsby_deletedelements}}';
+    public const DELETED_ELEMENTS = '{{%gatsby_deletedelements}}';
 }
