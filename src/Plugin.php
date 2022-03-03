@@ -22,10 +22,7 @@ use craft\gatsbyhelper\services\Builds;
 use craft\gatsbyhelper\services\Deltas;
 use craft\gatsbyhelper\services\SourceNodes;
 use craft\helpers\ElementHelper;
-use craft\helpers\StringHelper;
 use craft\services\Gql;
-use GraphQL\Type\Definition\Type;
-use yii\base\BaseObject;
 use yii\base\Event;
 
 /**
@@ -42,17 +39,17 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
-    public $schemaVersion = '2.0.0';
+    public string $schemaVersion = '2.0.0';
 
     /**
      * @inheritdoc
      */
-    public $hasCpSettings = true;
+    public bool $hasCpSettings = true;
 
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->_registerServices();
@@ -66,6 +63,7 @@ class Plugin extends \craft\base\Plugin
      * Return the SourceNodes service.
      *
      * @return SourceNodes
+     * @throws \yii\base\InvalidConfigException
      */
     public function getSourceNodes(): SourceNodes
     {
@@ -76,6 +74,7 @@ class Plugin extends \craft\base\Plugin
      * Return the Deltas service.
      *
      * @return Deltas
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDeltas(): Deltas
     {
@@ -85,7 +84,8 @@ class Plugin extends \craft\base\Plugin
     /**
      * Return the Builds service.
      *
-     * @return Deltas
+     * @return Builds
+     * @throws \yii\base\InvalidConfigException
      */
     public function getBuilds(): Builds
     {
@@ -95,7 +95,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): craft\base\Model
     {
         return new Settings();
     }
@@ -103,7 +103,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
-    protected function settingsHtml()
+    protected function settingsHtml(): null|string
     {
         return Craft::$app->getView()->renderTemplate('gatsby-helper/settings', [
             'settings' => $this->getSettings(),
@@ -113,12 +113,12 @@ class Plugin extends \craft\base\Plugin
     /**
      * Register the Gql queries
      */
-    private function _registerGqlQueries()
+    private function _registerGqlQueries(): void
     {
         Event::on(
             Gql::class,
             Gql::EVENT_REGISTER_GQL_QUERIES,
-            function(RegisterGqlQueriesEvent $event) {
+            static function(RegisterGqlQueriesEvent $event) {
                 // Add my GraphQL queries
                 $event->queries = array_merge(
                     $event->queries,
@@ -131,12 +131,12 @@ class Plugin extends \craft\base\Plugin
     /**
      * Register the Gql schema components
      */
-    private function _registerGqlComponents()
+    private function _registerGqlComponents(): void
     {
         Event::on(
             Gql::class,
             Gql::EVENT_REGISTER_GQL_SCHEMA_COMPONENTS,
-            function(RegisterGqlSchemaComponentsEvent $event) {
+            static function(RegisterGqlSchemaComponentsEvent $event) {
                 $label = 'Gatsby';
 
                 $event->queries[$label] = [
@@ -149,7 +149,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * Register the Element listeners
      */
-    private function _registerElementListeners()
+    private function _registerElementListeners(): void
     {
         Event::on(
             Element::class,
@@ -194,7 +194,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * Inject the live preview listener code.
      */
-    private function _registerLivePreviewListener()
+    private function _registerLivePreviewListener(): void
     {
         $previewWebhookUrl = Craft::parseEnv($this->getSettings()->previewWebhookUrl);
 
@@ -269,7 +269,7 @@ JS;
     /**
      * Register the services
      */
-    private function _registerServices()
+    private function _registerServices(): void
     {
         $this->setComponents([
             'sourceNodes' => [

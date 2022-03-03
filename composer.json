@@ -2,7 +2,7 @@
   "name": "craftcms/gatsby-helper",
   "description": "Plugin for enabling support for the Gatsby Craft CMS source plugin.",
   "type": "craft-plugin",
-  "version": "1.1.2",
+  "version": "2.0.0-alpha",
   "keywords": [
     "craft",
     "cms",
@@ -22,7 +22,7 @@
     }
   ],
   "require": {
-    "craftcms/cms": "^3.5.11"
+    "craftcms/cms": "^4.0.0-alpha1"
   },
   "autoload": {
     "psr-4": {
@@ -33,5 +33,11 @@
     "name": "Gatsby Helper",
     "handle": "gatsby-helper",
     "developerUrl": "https://craftcms.com/"
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
   }
 }

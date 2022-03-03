@@ -20,5 +20,5 @@ class RegisterIgnoredTypesEvent extends Event
     /**
      * @var array List of element type classes ignored for change tracking
      */
-    public $types = [];
+    public array $types = [];
 }

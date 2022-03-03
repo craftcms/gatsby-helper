@@ -50,7 +50,7 @@ class Deltas extends Component
      * });
      * ```
      */
-    const EVENT_REGISTER_IGNORED_TYPES = 'registerIgnoredTypes';
+    public const EVENT_REGISTER_IGNORED_TYPES = 'registerIgnoredTypes';
 
     /**
      * Get the last time content was updated or deleted.
@@ -58,7 +58,7 @@ class Deltas extends Component
      * @return false|string|null
      * @throws \Exception
      */
-    public function getLastContentUpdateTime()
+    public function getLastContentUpdateTime(): bool|string|null
     {
         $lastUpdated = (new Query())
             ->select(new Expression('MAX([[dateUpdated]])'))
@@ -163,7 +163,7 @@ class Deltas extends Component
      *
      * @return string[]
      */
-    private function _getIgnoredTypes()
+    private function _getIgnoredTypes(): array
     {
         $event = new RegisterIgnoredTypesEvent([
             'types' => [

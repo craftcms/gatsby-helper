@@ -2,13 +2,10 @@
 
 namespace craft\gatsbyhelper\migrations;
 
-use Craft;
 use craft\db\Migration;
 use craft\db\Query;
 use craft\db\Table as CraftTable;
 use craft\gatsbyhelper\db\Table;
-use craft\helpers\ArrayHelper;
-use craft\helpers\StringHelper;
 
 /**
  * m210419_173000_deletedElementSiteId migration.
