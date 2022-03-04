@@ -13,7 +13,7 @@ use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
 use craft\gql\GqlEntityRegistry;
 use craft\gql\interfaces\Element as ElementInterface;
-use craft\helpers\ElementHelper;
+use craft\gql\types\elements\Element;
 use GraphQL\Type\Definition\ResolveInfo;
 
 /**
@@ -56,6 +56,7 @@ class UpdatedNode extends Resolver
                 continue;
             }
 
+            /** @var Element $gqlType */
             $gqlType = $schema->getType(GqlEntityRegistry::prefixTypeName($element->getGqlTypeName()));
             $registeredInterfaces = $gqlType->getInterfaces();
 

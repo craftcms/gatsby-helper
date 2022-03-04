@@ -261,8 +261,8 @@ class Plugin extends \craft\base\Plugin
                         }
 JS;
 
-                Craft::$app->view->registerJs($js);
-            });
+                    Craft::$app->view->registerJs($js);
+                });
         }
     }
 

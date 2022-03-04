@@ -18,8 +18,6 @@ use craft\gatsbyhelper\helpers\Gql as GqlHelper;
 use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Query;
 use craft\gql\types\DateTime;
-use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
 /**
@@ -61,7 +59,9 @@ class Sourcing extends Query
             ],
             'primarySiteId' => [
                 'type' => Type::string(),
-                'resolve' => function () { return Craft::$app->getSites()->getPrimarySite()->handle; },
+                'resolve' => function() {
+                    return Craft::$app->getSites()->getPrimarySite()->handle;
+                },
                 'description' => 'Return the primary site id.'
             ],
             'nodesUpdatedSince' => [
@@ -93,7 +93,7 @@ class Sourcing extends Query
             ],
             'gatsbyHelperVersion' => [
                 'type' => Type::string(),
-                'resolve' => function () {
+                'resolve' => function() {
                     return Plugin::getInstance()->version;
                 },
                 'description' => 'Return the verison of the currently installed Helper plugin version.'
@@ -101,7 +101,7 @@ class Sourcing extends Query
             'gqlTypePrefix' => [
                 'name' => 'gqlTypePrefix',
                 'type' => Type::string(),
-                'resolve' => function () {
+                'resolve' => function() {
                     return Craft::$app->getConfig()->getGeneral()->gqlTypePrefix;
                 },
                 'description' => 'Return the value of the `gqlTypePrefix` config setting.'
@@ -110,8 +110,8 @@ class Sourcing extends Query
                 'name' => 'craftVersion',
                 'type' => Type::string(),
                 'description' => 'Return the value of the `gqlTypePrefix` config setting.',
-                'resolve' => function () {
-                     return Craft::$app->version;
+                'resolve' => function() {
+                    return Craft::$app->version;
                 },
             ]
         ];
