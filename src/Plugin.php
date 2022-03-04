@@ -85,7 +85,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * Return the Builds service.
      *
-     * @return Deltas
+     * @return Builds
      */
     public function getBuilds(): Builds
     {

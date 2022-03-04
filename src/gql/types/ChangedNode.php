@@ -21,7 +21,7 @@ use GraphQL\Type\Definition\Type;
 class ChangedNode extends ObjectType
 {
     /**
-     * @return string|null
+     * @return string
      */
     public static function getName(): string
     {
