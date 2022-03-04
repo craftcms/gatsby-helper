@@ -49,6 +49,11 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
+    public string $minVersionRequired = '1.0.3';
+
+    /**
+     * @inheritdoc
+     */
     public function init(): void
     {
         parent::init();
