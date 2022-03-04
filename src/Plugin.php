@@ -12,6 +12,7 @@ namespace craft\gatsbyhelper;
 
 use Craft;
 use craft\base\Element;
+use craft\base\Model;
 use craft\elements\Entry;
 use craft\events\RegisterGqlQueriesEvent;
 use craft\events\RegisterGqlSchemaComponentsEvent;
@@ -100,7 +101,7 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
-    protected function createSettingsModel(): craft\base\Model
+    protected function createSettingsModel(): Model
     {
         return new Settings();
     }
