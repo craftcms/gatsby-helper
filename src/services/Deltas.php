@@ -155,7 +155,7 @@ class Deltas extends Component
             $rows[] = [$element->id, $site, $element->getGqlTypeName(), Db::prepareDateForDb(new DateTime())];
         }
 
-        return (bool)Db::batchInsert(Table::DELETED_ELEMENTS, ['elementId', 'siteId', 'typeName', 'dateDeleted'], $rows, false);
+        return (bool)Db::batchInsert(Table::DELETED_ELEMENTS, ['elementId', 'siteId', 'typeName', 'dateDeleted'], $rows);
     }
 
     /**
