@@ -14,7 +14,6 @@ use craft\gql\base\Resolver;
 use craft\gql\GqlEntityRegistry;
 use craft\gql\interfaces\Element as ElementInterface;
 use craft\gql\types\elements\Element;
-use craft\helpers\ElementHelper;
 use GraphQL\Type\Definition\ResolveInfo;
 
 /**

@@ -22,10 +22,7 @@ use craft\gatsbyhelper\services\Builds;
 use craft\gatsbyhelper\services\Deltas;
 use craft\gatsbyhelper\services\SourceNodes;
 use craft\helpers\ElementHelper;
-use craft\helpers\StringHelper;
 use craft\services\Gql;
-use GraphQL\Type\Definition\Type;
-use yii\base\BaseObject;
 use yii\base\Event;
 
 /**
@@ -261,8 +258,8 @@ class Plugin extends \craft\base\Plugin
                         }
 JS;
 
-                Craft::$app->view->registerJs($js);
-            });
+                    Craft::$app->view->registerJs($js);
+                });
         }
     }
 

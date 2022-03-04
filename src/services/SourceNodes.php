@@ -20,7 +20,6 @@ use craft\gql\interfaces\elements\GlobalSet as GlobalSetInterface;
 use craft\gql\interfaces\elements\Tag as TagInterface;
 use craft\gql\interfaces\elements\User as UserInterface;
 use craft\helpers\Gql;
-use craft\helpers\StringHelper;
 
 /**
  * SourceNodes Service

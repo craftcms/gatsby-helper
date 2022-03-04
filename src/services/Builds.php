@@ -12,14 +12,8 @@ namespace craft\gatsbyhelper\services;
 
 use Craft;
 use craft\base\Component;
-use craft\base\Element;
-use craft\db\Query;
-use craft\elements\MatrixBlock;
 use craft\gatsbyhelper\Plugin;
-use craft\helpers\DateTimeHelper;
-use craft\helpers\Db;
 use yii\base\Application;
-use yii\db\Expression;
 
 /**
  * Builds Service

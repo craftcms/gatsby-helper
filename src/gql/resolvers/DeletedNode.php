@@ -7,7 +7,6 @@
 
 namespace craft\gatsbyhelper\gql\resolvers;
 
-use craft\base\Element;
 use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
 use GraphQL\Type\Definition\ResolveInfo;
