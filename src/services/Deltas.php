@@ -111,7 +111,7 @@ class Deltas extends Component
                 [
                     'or',
                     ['>', 'e.dateUpdated', Db::prepareDateForDb($timestamp)],
-                    ['IN', 'e.id', array_keys($structureUpdates)]
+                    ['IN', 'e.id', array_keys($structureUpdates)],
                 ]
             )
             ->andWhere(['e.revisionId' => null])
@@ -168,7 +168,7 @@ class Deltas extends Component
     {
         $event = new RegisterIgnoredTypesEvent([
             'types' => [
-                MatrixBlock::class
+                MatrixBlock::class,
             ],
         ]);
 

@@ -12,7 +12,6 @@ use craft\gatsbyhelper\gql\resolvers\DeletedNode as DeletedNodeResolver;
 use craft\gatsbyhelper\gql\resolvers\SourceNode as SourceNodeResolver;
 use craft\gatsbyhelper\gql\resolvers\UpdatedNode as UpdatedNodeResolver;
 use craft\gatsbyhelper\gql\types\ChangedNode;
-use craft\gatsbyhelper\gql\types\GatsbyMeta;
 use craft\gatsbyhelper\gql\types\SourceNode;
 use craft\gatsbyhelper\helpers\Gql as GqlHelper;
 use craft\gatsbyhelper\Plugin;
@@ -41,35 +40,35 @@ class Sourcing extends Query
             'sourceNodeInformation' => [
                 'type' => Type::listOf(SourceNode::getType()),
                 'resolve' => SourceNodeResolver::class . '::resolve',
-                'description' => 'Return sourcing data for Gatsby source queries.'
+                'description' => 'Return sourcing data for Gatsby source queries.',
             ],
             'configVersion' => [
                 'type' => Type::string(),
                 'resolve' => function() {
                     return Craft::$app->getInfo()->configVersion;
                 },
-                'description' => 'Return the current config version.'
+                'description' => 'Return the current config version.',
             ],
             'lastUpdateTime' => [
                 'type' => DateTime::getType(),
                 'resolve' => function() {
                     return Plugin::getInstance()->getDeltas()->getLastContentUpdateTime();
                 },
-                'description' => 'Return the last time content was updated on this site.'
+                'description' => 'Return the last time content was updated on this site.',
             ],
             'primarySiteId' => [
                 'type' => Type::string(),
                 'resolve' => function() {
                     return Craft::$app->getSites()->getPrimarySite()->handle;
                 },
-                'description' => 'Return the primary site id.'
+                'description' => 'Return the primary site id.',
             ],
             'nodesUpdatedSince' => [
                 'type' => Type::listOf(ChangedNode::getType()),
                 'args' => [
                     'since' => [
                         'name' => 'since',
-                        'type' => Type::nonNull(Type::string())
+                        'type' => Type::nonNull(Type::string()),
                     ],
                     'site' => [
                         'name' => 'site',
@@ -78,25 +77,25 @@ class Sourcing extends Query
                     ],
                 ],
                 'resolve' => UpdatedNodeResolver::class . '::resolve',
-                'description' => 'Return the list of nodes updated since a point in time.'
+                'description' => 'Return the list of nodes updated since a point in time.',
             ],
             'nodesDeletedSince' => [
                 'type' => Type::listOf(ChangedNode::getType()),
                 'args' => [
                     'since' => [
                         'name' => 'since',
-                        'type' => Type::nonNull(Type::string())
+                        'type' => Type::nonNull(Type::string()),
                     ],
                 ],
                 'resolve' => DeletedNodeResolver::class . '::resolve',
-                'description' => 'Return the list of nodes deleted since a point in time.'
+                'description' => 'Return the list of nodes deleted since a point in time.',
             ],
             'gatsbyHelperVersion' => [
                 'type' => Type::string(),
                 'resolve' => function() {
                     return Plugin::getInstance()->version;
                 },
-                'description' => 'Return the verison of the currently installed Helper plugin version.'
+                'description' => 'Return the verison of the currently installed Helper plugin version.',
             ],
             'gqlTypePrefix' => [
                 'name' => 'gqlTypePrefix',
@@ -104,7 +103,7 @@ class Sourcing extends Query
                 'resolve' => function() {
                     return Craft::$app->getConfig()->getGeneral()->gqlTypePrefix;
                 },
-                'description' => 'Return the value of the `gqlTypePrefix` config setting.'
+                'description' => 'Return the value of the `gqlTypePrefix` config setting.',
             ],
             'craftVersion' => [
                 'name' => 'craftVersion',
@@ -113,7 +112,7 @@ class Sourcing extends Query
                 'resolve' => function() {
                     return Craft::$app->version;
                 },
-            ]
+            ],
         ];
     }
 }

@@ -42,8 +42,8 @@ class Builds extends Component
                 $guzzle = Craft::createGuzzleClient([
                     'headers' => [
                         'x-preview-update-source' => 'Craft CMS',
-                        'Content-type' => 'application/json'
-                    ]
+                        'Content-type' => 'application/json',
+                    ],
                 ]);
                 $guzzle->request('POST', $buildWebhookUrl);
             }, null, false);

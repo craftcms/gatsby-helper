@@ -126,7 +126,7 @@ class SourceNodes extends Component
         }
 
         $event = new RegisterSourceNodeTypesEvent([
-            'types' => $nodeTypes
+            'types' => $nodeTypes,
         ]);
 
         $this->trigger(self::EVENT_REGISTER_SOURCE_NODE_TYPES, $event);
