@@ -137,7 +137,7 @@ class Plugin extends \craft\base\Plugin
                 $label = 'Gatsby';
 
                 $event->queries[$label] = [
-                    'gatsby:read' => ['label' => 'Allow discovery of sourcing data for Gatsby.']
+                    'gatsby:read' => ['label' => 'Allow discovery of sourcing data for Gatsby.'],
                 ];
             }
         );

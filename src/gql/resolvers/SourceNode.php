@@ -23,5 +23,4 @@ class SourceNode extends Resolver
     {
         return Plugin::getInstance()->getSourceNodes()->getSourceNodeTypes();
     }
-
 }

@@ -75,8 +75,8 @@ class SourceNode extends ObjectType
             'targetInterface' => [
                 'name' => 'targetInterface',
                 'type' => Type::string(),
-                'description' => 'Which target interface should be used to infer specific type implementations.'
-            ]
+                'description' => 'Which target interface should be used to infer specific type implementations.',
+            ],
         ], self::getName());
     }
 }

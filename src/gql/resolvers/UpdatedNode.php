@@ -73,7 +73,7 @@ class UpdatedNode extends Resolver
                 'nodeId' => $updatedNode['id'],
                 'nodeType' => $element->getGqlTypeName(),
                 'siteId' => $updatedNode['siteId'],
-                'elementType' => get_class($element)
+                'elementType' => get_class($element),
             ];
         }
 

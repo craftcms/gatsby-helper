@@ -28,7 +28,7 @@ class DeletedNode extends Resolver
             $resolved[] = [
                 'nodeId' => $element['elementId'],
                 'siteId' => $element['siteId'],
-                'nodeType' => $element['typeName']
+                'nodeType' => $element['typeName'],
             ];
         }
 
