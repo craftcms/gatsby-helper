@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 1.1.3 - 2021-04-13
 
 ### Changed
 - The `elementType` field on the `UpdatedNode` GraphQL type can also be null.
