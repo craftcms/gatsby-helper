@@ -1,5 +1,10 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+
+### Changed
+- The plugin now requires Craft 4.0.0-alpha1.
+
 ## 1.1.3 - 2021-04-13
 
 ### Changed
