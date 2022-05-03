@@ -40,6 +40,20 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
+    public static function config(): array
+    {
+        return [
+            'components' => [
+                'builds' => ['class' => Builds::class],
+                'deltas' => ['class' => Deltas::class],
+                'sourceNodes' => ['class' => SourceNodes::class],
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public string $schemaVersion = '2.0.0';
 
     /**
@@ -58,7 +72,6 @@ class Plugin extends \craft\base\Plugin
     public function init(): void
     {
         parent::init();
-        $this->_registerServices();
         $this->_registerGqlQueries();
         $this->_registerGqlComponents();
         $this->_registerElementListeners();
@@ -270,23 +283,5 @@ JS;
                     Craft::$app->view->registerJs($js);
                 });
         }
-    }
-
-    /**
-     * Register the services
-     */
-    private function _registerServices(): void
-    {
-        $this->setComponents([
-            'sourceNodes' => [
-                'class' => SourceNodes::class,
-            ],
-            'deltas' => [
-                'class' => Deltas::class,
-            ],
-            'builds' => [
-                'class' => Builds::class,
-            ],
-        ]);
     }
 }
