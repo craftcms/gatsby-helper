@@ -1,9 +1,12 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 2.0.0 - 2022-05-03
+
+### Added
+- Added Craft 4 compatibility.
 
 ### Changed
-- The plugin now requires Craft 4.0.0-alpha1.
+- The `builds`, `deltas`, and `sourceNodes` components can now be configured via `craft\services\Plugins::$pluginConfigs`.
 
 ## 1.1.3 - 2021-04-13
 
