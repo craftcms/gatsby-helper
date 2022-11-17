@@ -255,7 +255,7 @@ class Plugin extends \craft\base\Plugin
                                 };
                                 
                                 if (doPreview) {
-                                    payload.token = await event.target.draftEditor.getPreviewToken();
+                                    payload.token = await event.target.elementEditor.getPreviewToken();
                                 } else {
                                     currentlyPreviewing = null;
                                 }
