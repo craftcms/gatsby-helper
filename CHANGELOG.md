@@ -1,5 +1,10 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+
+### Fixed
+- Fixed a bug where Live Preview wasn’t working properly on newer versions of Craft. ([#25](https://github.com/craftcms/gatsby-helper/pull/25))
+
 ## 2.0.0 - 2022-05-03
 
 ### Added
