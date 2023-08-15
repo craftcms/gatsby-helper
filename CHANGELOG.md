@@ -1,16 +1,10 @@
 # Release Notes for Gatsby Helper
 
 ## 2.0.1 - 2022-11-21
-
-### Fixed
 - Fixed a bug where Live Preview wasn’t working properly on newer versions of Craft. ([#25](https://github.com/craftcms/gatsby-helper/pull/25))
 
 ## 2.0.0 - 2022-05-03
-
-### Added
 - Added Craft 4 compatibility.
-
-### Changed
 - The `builds`, `deltas`, and `sourceNodes` components can now be configured via `craft\services\Plugins::$pluginConfigs`.
 
 ## 1.1.4 - 2023-08-15
