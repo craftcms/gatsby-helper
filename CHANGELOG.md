@@ -1,5 +1,8 @@
 # Release Notes for Gatsby Helper
 
+## 2.0.2 - 2023-08-15
+- Fixed an error that could occur when determining which elements had been updated when sourcing elements. ([#31](https://github.com/craftcms/gatsby-helper/issues/31))
+
 ## 2.0.1 - 2022-11-21
 - Fixed a bug where Live Preview wasn’t working properly on newer versions of Craft. ([#25](https://github.com/craftcms/gatsby-helper/pull/25))
 
