@@ -9,6 +9,7 @@
 namespace craft\gatsbyhelper\gql\resolvers;
 
 use Craft;
+use craft\errors\GqlException;
 use craft\gatsbyhelper\Plugin;
 use craft\gql\base\Resolver;
 use craft\gql\GqlEntityRegistry;
@@ -51,13 +52,26 @@ class UpdatedNode extends Resolver
         foreach ($updatedNodes as $updatedNode) {
             $element = Craft::$app->getElements()->getElementById($updatedNode['id'], $updatedNode['type']);
 
+            // if element wasn't found - keep on going
+            if ($element == null) {
+                continue;
+            }
+
             // Don't care about elements that don't bother implementing GQL.
             if ($element->getGqlTypeName() === 'Element') {
                 continue;
             }
 
-            /** @var Element $gqlType */
-            $gqlType = $schema->getType(GqlEntityRegistry::prefixTypeName($element->getGqlTypeName()));
+            // try to find the matching type;
+            // if it's not included in the schema - move on to the next element instead of freaking out
+            // https://github.com/craftcms/gatsby-helper/issues/31
+            try {
+                /** @var Element $gqlType */
+                $gqlType = $schema->getType(GqlEntityRegistry::prefixTypeName($element->getGqlTypeName()));
+            } catch (GqlException $e) {
+                Craft::error($e->getMessage());
+                continue;
+            }
             $registeredInterfaces = $gqlType->getInterfaces();
 
             foreach ($registeredInterfaces as $registeredInterface) {
