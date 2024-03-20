@@ -6,7 +6,7 @@ This plugin enables support for the [gatsby-source-craft](https://github.com/cra
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0 or later.
+This plugin requires Craft CMS 4.0.0+ or 5.0.0+.
 
 ## Installation
 
