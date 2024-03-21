@@ -1,5 +1,8 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+- Added Craft 5 compatibility.
+
 ## 2.0.2 - 2023-08-15
 - Fixed an error that could occur when determining which elements had been updated when sourcing elements. ([#31](https://github.com/craftcms/gatsby-helper/issues/31))
 
