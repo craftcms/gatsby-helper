@@ -1,6 +1,6 @@
 # Release Notes for Gatsby Helper
 
-## Unreleased
+## 2.1.0 - 2024-03-21
 - Added Craft 5 compatibility.
 
 ## 2.0.2 - 2023-08-15
