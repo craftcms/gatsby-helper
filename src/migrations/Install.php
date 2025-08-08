@@ -23,6 +23,7 @@ class Install extends Migration
      */
     public function safeUp()
     {
+        $this->archiveTableIfExists(Table::DELETED_ELEMENTS);
         $this->createTable(Table::DELETED_ELEMENTS, [
             'id' => $this->primaryKey(),
             'elementId' => $this->integer(),
