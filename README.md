@@ -6,7 +6,17 @@ This plugin enables support for the [gatsby-source-craft](https://github.com/cra
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0+ or 5.0.0+.
+This plugin requires Craft CMS 4.0.0+, 5.0.0+, or 6.0.0+.
+
+### Craft 6
+
+On Craft 6, this version of the plugin runs through the [Yii 2 adapter](https://github.com/craftcms/yii2-adapter), so require it alongside the plugin:
+
+```bash
+composer require craftcms/gatsby-helper craftcms/yii2-adapter
+```
+
+Element types are stored under their Craft 6 class names, such as `CraftCms\Cms\Entry\Elements\Entry`. Use those names when you add types in a `RegisterIgnoredTypesEvent` handler, and expect them in the `elementType` field of `nodesUpdatedSince` results.
 
 ## Installation
 

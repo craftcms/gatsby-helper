@@ -14,6 +14,7 @@ use Craft;
 use craft\base\Component;
 use craft\gatsbyhelper\Plugin;
 use craft\helpers\App;
+use GuzzleHttp\Exception\GuzzleException;
 use yii\base\Application;
 
 /**
@@ -36,17 +37,39 @@ class Builds extends Component
     {
         $buildWebhookUrl = App::parseEnv(Plugin::getInstance()->getSettings()->buildWebhookUrl);
 
-        if (!empty($buildWebhookUrl) && $this->_buildQueued === false) {
+        if (empty($buildWebhookUrl)) {
+            return;
+        }
+
+        // Craft 6 only triggers EVENT_AFTER_REQUEST for web requests. Laravel’s deferred callbacks also run
+        // after console commands and after each queue job, and a named callback only runs once.
+        if (class_exists(\CraftCms\Cms\Cms::class)) {
+            /** @phpstan-ignore-next-line Laravel’s defer() only exists on Craft 6 */
+            \Illuminate\Support\defer(fn() => $this->_sendBuildRequest($buildWebhookUrl), 'gatsby-helper:build');
+            return;
+        }
+
+        if ($this->_buildQueued === false) {
             $this->_buildQueued = true;
             Craft::$app->on(Application::EVENT_AFTER_REQUEST, function() use ($buildWebhookUrl) {
-                $guzzle = Craft::createGuzzleClient([
-                    'headers' => [
-                        'x-preview-update-source' => 'Craft CMS',
-                        'Content-type' => 'application/json',
-                    ],
-                ]);
-                $guzzle->request('POST', $buildWebhookUrl);
+                $this->_sendBuildRequest($buildWebhookUrl);
             }, null, false);
+        }
+    }
+
+    private function _sendBuildRequest(string $buildWebhookUrl): void
+    {
+        $guzzle = Craft::createGuzzleClient([
+            'headers' => [
+                'x-preview-update-source' => 'Craft CMS',
+                'Content-type' => 'application/json',
+            ],
+        ]);
+
+        try {
+            $guzzle->request('POST', $buildWebhookUrl);
+        } catch (GuzzleException $e) {
+            Craft::error("Unable to trigger a Gatsby build: {$e->getMessage()}", __METHOD__);
         }
     }
 }
