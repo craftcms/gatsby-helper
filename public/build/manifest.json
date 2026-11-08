@@ -1,0 +1,8 @@
+{
+  "resources/js/live-preview.js": {
+    "file": "assets/live-preview-DVU8Dhb1.js",
+    "name": "live-preview",
+    "src": "resources/js/live-preview.js",
+    "isEntry": true
+  }
+}

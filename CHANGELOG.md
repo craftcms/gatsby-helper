@@ -1,5 +1,18 @@
 # Release Notes for Gatsby Helper
 
+## Unreleased
+
+> [!IMPORTANT]
+> Gatsby Helper 3.0 requires Craft 6 and PHP 8.5. See [UPGRADE.md](UPGRADE.md) for the breaking changes for custom code.
+
+- Added Craft 6 support, without the Yii 2 adapter.
+- The plugin’s namespace is now `CraftCms\GatsbyHelper`.
+- `RegisterSourceNodeTypesEvent` and `RegisterIgnoredTypesEvent` were replaced by the `SourceNodeTypesResolving` and `IgnoredTypesResolving` Laravel events.
+- Settings can now be set in `config/craft/gatsby-helper.php`.
+- Saving or deleting elements from the console or a queue job now triggers a build.
+- Errors from the Build Webhook URL are now logged, rather than interrupting the request.
+- Removed the deprecated `previewServerUrl` setting.
+
 ## 2.1.0 - 2024-03-21
 - Added Craft 5 compatibility.
 
