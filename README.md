@@ -10,7 +10,7 @@ This plugin requires Craft CMS 4.0.0+, 5.0.0+, or 6.0.0+.
 
 ### Craft 6
 
-On Craft 6, this version of the plugin runs through the [Yii 2 adapter](https://github.com/craftcms/yii2-adapter), so require it alongside the plugin:
+On Craft 6, this version of the plugin runs through the [Yii 2 adapter](https://github.com/craftcms/yii2-adapter), so require it alongside the plugin. It needs a version of the adapter newer than 6.0.0-alpha.20:
 
 ```bash
 composer require craftcms/gatsby-helper craftcms/yii2-adapter

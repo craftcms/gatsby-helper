@@ -14,7 +14,6 @@ use Craft;
 use craft\base\Element;
 use craft\base\Model;
 use craft\elements\Entry;
-use craft\events\ElementEvent;
 use craft\events\RegisterGqlQueriesEvent;
 use craft\events\RegisterGqlSchemaComponentsEvent;
 use craft\events\RegisterPreviewTargetsEvent;
@@ -24,7 +23,6 @@ use craft\gatsbyhelper\services\Builds;
 use craft\gatsbyhelper\services\Deltas;
 use craft\gatsbyhelper\services\SourceNodes;
 use craft\helpers\ElementHelper;
-use craft\services\Elements;
 use craft\services\Gql;
 use yii\base\Event;
 
@@ -172,18 +170,17 @@ class Plugin extends \craft\base\Plugin
      */
     private function _registerElementListeners(): void
     {
-        // Listen on the Elements service rather than on `craft\base\Element`, so the listeners also work on
-        // Craft 6 with the Yii 2 adapter, where class-level `Element::EVENT_AFTER_SAVE`/`EVENT_AFTER_DELETE`
-        // handlers aren’t triggered.
         Event::on(
-            Elements::class,
-            Elements::EVENT_AFTER_DELETE_ELEMENT,
-            function(ElementEvent $event) {
+            Element::class,
+            Element::EVENT_AFTER_DELETE,
+            function(Event $event) {
                 /** @var Element $element */
-                $element = $event->element;
+                $element = $event->sender;
 
                 $this->getDeltas()->registerDeletedElement($element);
 
+                /** @var Element $element */
+                $element = $event->sender;
                 $rootElement = ElementHelper::rootElement($element);
 
                 // If the element or it's root element is a draft, don't trigger a build.
@@ -196,10 +193,12 @@ class Plugin extends \craft\base\Plugin
         );
 
         Event::on(
-            Elements::class,
-            Elements::EVENT_AFTER_SAVE_ELEMENT,
-            function(ElementEvent $event) {
-                $rootElement = ElementHelper::rootElement($event->element);
+            Element::class,
+            Element::EVENT_AFTER_SAVE,
+            function(Event $event) {
+                /** @var Element $element */
+                $element = $event->sender;
+                $rootElement = ElementHelper::rootElement($element);
 
                 // If the element or it's root element is a draft, don't trigger a build.
                 if ($rootElement->getIsDraft() || $rootElement->getIsRevision()) {
@@ -229,13 +228,12 @@ class Plugin extends \craft\base\Plugin
                     $gqlTypeName = $element->getGqlTypeName();
 
                     $elementId = method_exists($element, 'getCanonicalId') ? $element->getCanonicalId() : $element->getSourceId();
-                    $tokenParam = Craft::$app->getConfig()->getGeneral()->tokenParam;
 
                     $js = <<<JS
                         {
                             let currentlyPreviewing;
 
-                            const alertGatsby = async function (event, doPreview, getToken) {
+                            const alertGatsby = async function (event, doPreview) {
                                 const url = doPreview ? event.previewTarget.url : '$previewWebhookUrl';
                                 const compareUrl = new URL(url);
 
@@ -257,7 +255,7 @@ class Plugin extends \craft\base\Plugin
                                 };
                                 
                                 if (doPreview) {
-                                    payload.token = await getToken();
+                                    payload.token = await event.target.elementEditor.getPreviewToken();
                                 } else {
                                     currentlyPreviewing = null;
                                 }
@@ -269,16 +267,7 @@ class Plugin extends \craft\base\Plugin
                             }
 
                             Garnish.on(Craft.Preview, 'beforeUpdateIframe', function(event) {
-                                if (event.target.elementEditor) {
-                                    alertGatsby(event, true, () => event.target.elementEditor.getPreviewToken());
-                                }
-                            });
-
-                            // Craft 6 has no element editor to get a token from, so wait for the frame's URL, which has one.
-                            Garnish.on(Craft.Preview, 'afterUpdateIframe', function(event) {
-                                if (!event.target.elementEditor) {
-                                    alertGatsby(event, true, () => new URL(event.\$iframe.attr('src'), window.location.href).searchParams.get('$tokenParam'));
-                                }
+                                alertGatsby(event, true);
                             });
                             
                             Garnish.on(Craft.Preview, 'beforeClose', function(event) {

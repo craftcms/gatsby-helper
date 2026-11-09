@@ -37,20 +37,19 @@ class Builds extends Component
     {
         $buildWebhookUrl = App::parseEnv(Plugin::getInstance()->getSettings()->buildWebhookUrl);
 
-        if (empty($buildWebhookUrl)) {
+        if (empty($buildWebhookUrl) || $this->_buildQueued) {
             return;
         }
 
-        // Craft 6 only triggers EVENT_AFTER_REQUEST for web requests. Laravel’s deferred callbacks also run
-        // after console commands and after each queue job, and a named callback only runs once.
-        if (class_exists(\CraftCms\Cms\Cms::class)) {
-            /** @phpstan-ignore-next-line Laravel’s defer() only exists on Craft 6 */
-            \Illuminate\Support\defer(fn() => $this->_sendBuildRequest($buildWebhookUrl), 'gatsby-helper:build');
-            return;
-        }
+        $this->_buildQueued = true;
 
-        if ($this->_buildQueued === false) {
-            $this->_buildQueued = true;
+        // onAfterRequest() callbacks also run after each queue job, so a long-running worker sends one build per job.
+        if (method_exists(Craft::$app, 'onAfterRequest')) {
+            Craft::$app->onAfterRequest(function() use ($buildWebhookUrl) {
+                $this->_buildQueued = false;
+                $this->_sendBuildRequest($buildWebhookUrl);
+            });
+        } else {
             Craft::$app->on(Application::EVENT_AFTER_REQUEST, function() use ($buildWebhookUrl) {
                 $this->_sendBuildRequest($buildWebhookUrl);
             }, null, false);
