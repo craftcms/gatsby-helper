@@ -14,6 +14,7 @@ use Craft;
 use craft\base\Component;
 use craft\gatsbyhelper\Plugin;
 use craft\helpers\App;
+use GuzzleHttp\Exception\GuzzleException;
 use yii\base\Application;
 
 /**
@@ -36,17 +37,38 @@ class Builds extends Component
     {
         $buildWebhookUrl = App::parseEnv(Plugin::getInstance()->getSettings()->buildWebhookUrl);
 
-        if (!empty($buildWebhookUrl) && $this->_buildQueued === false) {
-            $this->_buildQueued = true;
+        if (empty($buildWebhookUrl) || $this->_buildQueued) {
+            return;
+        }
+
+        $this->_buildQueued = true;
+
+        // onAfterRequest() callbacks also run after each queue job, so a long-running worker sends one build per job.
+        if (method_exists(Craft::$app, 'onAfterRequest')) {
+            Craft::$app->onAfterRequest(function() use ($buildWebhookUrl) {
+                $this->_buildQueued = false;
+                $this->_sendBuildRequest($buildWebhookUrl);
+            });
+        } else {
             Craft::$app->on(Application::EVENT_AFTER_REQUEST, function() use ($buildWebhookUrl) {
-                $guzzle = Craft::createGuzzleClient([
-                    'headers' => [
-                        'x-preview-update-source' => 'Craft CMS',
-                        'Content-type' => 'application/json',
-                    ],
-                ]);
-                $guzzle->request('POST', $buildWebhookUrl);
+                $this->_sendBuildRequest($buildWebhookUrl);
             }, null, false);
+        }
+    }
+
+    private function _sendBuildRequest(string $buildWebhookUrl): void
+    {
+        $guzzle = Craft::createGuzzleClient([
+            'headers' => [
+                'x-preview-update-source' => 'Craft CMS',
+                'Content-type' => 'application/json',
+            ],
+        ]);
+
+        try {
+            $guzzle->request('POST', $buildWebhookUrl);
+        } catch (GuzzleException $e) {
+            Craft::error("Unable to trigger a Gatsby build: {$e->getMessage()}", __METHOD__);
         }
     }
 }

@@ -1,5 +1,9 @@
 # Release Notes for Gatsby Helper
 
+## 2.2.0 - 2026-11-12
+- Added Craft 6 compatibility, via the `craftcms/yii2-adapter` package.
+- Errors from the Build Webhook URL are now logged, rather than interrupting the request.
+
 ## 2.1.0 - 2024-03-21
 - Added Craft 5 compatibility.
 
